@@ -795,7 +795,7 @@ const CustomOAuthSetting = ({ serverAddress }) => {
                 <Form.Input
                   field='icon'
                   label={t('图标')}
-                  placeholder={t('例如：github / si:google / https://example.com/logo.png / 🐱')}
+                  placeholder={t('例如：github / si:google / https://example.com/images.jpeg / 🐱')}
                   extraText={
                     <span>
                       {t(

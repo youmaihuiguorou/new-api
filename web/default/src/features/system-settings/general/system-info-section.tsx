@@ -244,7 +244,7 @@ export function SystemInfoSection({ defaultValues }: SystemInfoSectionProps) {
                     <FormLabel>{t('Logo URL')}</FormLabel>
                     <FormControl>
                       <Input
-                        placeholder={t('https://example.com/logo.png')}
+                        placeholder={t('https://example.com/images.jpeg')}
                         {...field}
                       />
                     </FormControl>

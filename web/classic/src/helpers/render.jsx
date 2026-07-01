@@ -553,7 +553,7 @@ function normalizeOAuthIconKey(raw) {
  * Supported formats:
  * - react-icons simple key: github / gitlab / google / keycloak
  * - prefixed key: ri:github / si:github
- * - full URL image: https://example.com/logo.png
+ * - full URL image: https://example.com/images.jpeg
  * - emoji: 🐱
  */
 export function getOAuthProviderIcon(iconName, size = 20) {
