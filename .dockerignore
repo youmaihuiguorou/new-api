@@ -13,3 +13,11 @@ docs
 /web/classic/node_modules
 /web/classic/dist
 !THIRD-PARTY-LICENSES.md
+.idea
+node_modules
+logs
+tmp
+dist
+*.log
+Dockerfile.old
+README.md
