@@ -29,7 +29,7 @@ COPY web/default/package.json ./default/package.json
 COPY web/classic/package.json ./classic/package.json
 
 RUN --mount=type=cache,target=/root/.bun \
-    bun install --frozen-lockfile
+    bun install --frozen-lockfile --registry https://registry.npmmirror.com
 
 COPY ./web/classic ./classic
 COPY ./VERSION /build/VERSION
