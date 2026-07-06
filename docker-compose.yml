@@ -3,7 +3,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: new-api:amd64
+    image: new-api:local
     container_name: new-api
     restart: unless-stopped
     command: --log-dir /app/logs
