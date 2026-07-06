@@ -9,7 +9,9 @@ COPY web/default/package.json ./default/package.json
 COPY web/classic/package.json ./classic/package.json
 
 RUN --mount=type=cache,target=/root/.bun \
-    bun install --frozen-lockfile --registry https://registry.npmmirror.com
+    for i in 1 2 3; do \
+        bun install --frozen-lockfile && break || { echo "bun install failed, retry $i..."; rm -rf /root/.bun/install/cache; sleep 5; }; \
+    done
 
 COPY ./web/default ./default
 COPY ./VERSION /build/VERSION
@@ -29,7 +31,9 @@ COPY web/default/package.json ./default/package.json
 COPY web/classic/package.json ./classic/package.json
 
 RUN --mount=type=cache,target=/root/.bun \
-    bun install --frozen-lockfile --registry https://registry.npmmirror.com
+    for i in 1 2 3; do \
+        bun install --frozen-lockfile && break || { echo "bun install failed, retry $i..."; rm -rf /root/.bun/install/cache; sleep 5; }; \
+    done
 
 COPY ./web/classic ./classic
 COPY ./VERSION /build/VERSION
@@ -55,11 +59,9 @@ WORKDIR /build
 
 COPY go.mod go.sum ./
 
-# 主代理 goproxy.cn 失败会自动 fallback 到官方 proxy.golang.org，最后 direct 直连
 ENV GOPROXY=https://goproxy.cn,https://proxy.golang.org,direct
 ENV GOSUMDB=sum.golang.google.cn
 
-# 加重试，网络抖动时最多重试 3 次，每次间隔递增
 RUN --mount=type=cache,target=/go/pkg/mod \
     --mount=type=cache,target=/root/.cache/go-build \
     for i in 1 2 3; do \
@@ -79,13 +81,17 @@ RUN --mount=type=cache,target=/go/pkg/mod \
     -o new-api
 
 
-FROM debian:bookworm-slim@sha256:f06537653ac770703bc45b4b113475bd402f451e85223f0f2837acbf89ab020a
+FROM debian:bookworm-slim@sha256:f06537653ac770703bc45b4b113475bd402f451e85223f0f2837acbf89ab020a AS final
 
-RUN apt-get update \
+RUN sed -i 's|deb.debian.org|mirrors.aliyun.com|g; s|security.debian.org|mirrors.aliyun.com/debian-security|g' /etc/apt/sources.list.d/debian.sources 2>/dev/null || \
+    sed -i 's|deb.debian.org|mirrors.aliyun.com|g; s|security.debian.org|mirrors.aliyun.com/debian-security|g' /etc/apt/sources.list
+
+RUN for i in 1 2 3; do \
+        apt-get update && break || { echo "apt-get update failed, retry $i..."; sleep $((i * 5)); }; \
+    done \
     && apt-get install -y --no-install-recommends \
        ca-certificates \
        tzdata \
-       libasan8 \
        wget \
     && rm -rf /var/lib/apt/lists/* \
     && update-ca-certificates
