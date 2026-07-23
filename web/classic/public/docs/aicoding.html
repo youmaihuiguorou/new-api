@@ -1,0 +1,1473 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>悟空 API 中转｜Claude Code · CodeX · Gemini 配置教程 — 国内稳定高效 AI 编程大模型接入指南</title>
+	<meta name="keywords" content="悟空API, AI编程, Claude Code配置, CodeX教程, Gemini CLI安装, AI大模型中转, 国内API代理, AI模型代理, 开发者API接入, Python Node.js AI编程, 智能编程工具, 国内大模型访问, Claude Sonnet配置, Gemini Pro教程, API中转服务">
+	<meta name="description" content="悟空 API 为开发者提供国内高速、稳定的 AI 大模型中转与代理接入服务，支持 Claude Code、CodeX、Gemini CLI 等主流编程工具。一站式配置指南覆盖 Windows / macOS / Linux 平台，助你快速连接 Claude Sonnet 4、Gemini 2.5 Pro 等模型，实现高效智能编程与企业级 AI 开发支持。"><meta name="author" content="悟空 API">
+    <meta name="robots" content="index, follow">
+    <meta property="og:title" content="悟空 API - AI编程工具配置指南">
+    <meta property="og:description" content="国内稳定的AI模型中转服务，支持Claude Code、CodeX、Gemini CLI等工具">
+    <meta property="og:url" content="https://wukong.support/">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary-color: #f5f5f5;
+            --text-primary: #1a1a1a;
+            --text-secondary: #666;
+            --border-color: #e0e0e0;
+            --code-bg: #f6f8fa;
+            --success-color: #28a745;
+            --warning-color: #ffc107;
+            --info-color: #17a2b8;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Microsoft YaHei', sans-serif;
+            line-height: 1.6;
+            color: var(--text-primary);
+            background: #ffffff;
+        }
+
+        /* 导航栏主容器 */
+        nav {
+            background: linear-gradient(135deg, #eef2ff 0%, #f3e8ff 35%, #fef3c7 70%, #fce7f3 100%);
+            color: #1e293b;
+            padding: 1.2rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+            border-bottom: 2px solid var(--primary-color);
+        }
+
+        /* 导航栏背景光效 */
+        nav::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(
+                ellipse 120% 100% at 50% 0%, 
+                rgba(255, 255, 255, 0.5) 0%, 
+                transparent 70%
+            );
+            pointer-events: none;
+        }
+
+        /* 导航栏装饰条 */
+        nav::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(
+                90deg, 
+                #6366f1 0%, 
+                #06b6d4 25%, 
+                #10b981 50%, 
+                #f59e0b 75%, 
+                #ec4899 100%
+            );
+        }
+
+        /* 标题 */
+        nav h1 {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin: 0 0 0.3rem 0;
+            color: #0f172a;
+            letter-spacing: -0.3px;
+            position: relative;
+            z-index: 1;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        nav h1::before {
+            content: '⚡';
+            font-size: 1.5rem;
+            display: inline-block;
+        }
+
+        nav h1 a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* 副标题 */
+        nav p {
+            font-size: 0.9rem;
+            font-weight: 400;
+            margin: 0;
+            position: relative;
+            z-index: 1;
+            color: #64748b;
+            letter-spacing: 0.3px;
+        }
+
+        /* 响应式 - 平板及以下 */
+        @media (max-width: 768px) {
+            nav {
+                padding: 1rem 1.5rem;
+            }
+
+            nav h1 {
+                font-size: 1.2rem;
+                margin-bottom: 0.25rem;
+            }
+
+            nav p {
+                font-size: 0.85rem;
+            }
+        }
+
+        /* 响应式 - 手机 */
+        @media (max-width: 480px) {
+            nav {
+                padding: 0.9rem 1rem;
+            }
+
+            nav h1 {
+                font-size: 1rem;
+                margin-bottom: 0.2rem;
+            }
+
+            nav h1::before {
+                font-size: 1.2rem;
+            }
+
+            nav p {
+                font-size: 0.8rem;
+            }
+        }
+
+        /* 主容器 */
+        .container {
+            display: flex;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* 侧边栏 */
+        .sidebar {
+            width: 280px;
+            background: var(--secondary-color);
+            padding: 2rem 1.5rem;
+            border-right: 1px solid var(--border-color);
+            height: calc(100vh - 100px);
+            overflow-y: auto;
+            position: sticky;
+            top: 80px;
+        }
+
+        .sidebar h3 {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            margin: 1.5rem 0 1rem 0;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .sidebar ul {
+            list-style: none;
+        }
+
+        .sidebar li {
+            margin: 0.5rem 0;
+        }
+
+        .sidebar a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.95rem;
+            padding: 0.5rem 0.75rem;
+            border-radius: 4px;
+            display: block;
+            transition: all 0.3s ease;
+        }
+
+        .sidebar a:hover {
+            background: rgba(99, 102, 241, 0.1);
+            color: var(--primary-color);
+            padding-left: 1rem;
+        }
+
+        .sidebar a.active {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .sidebar .nested {
+            margin-left: 1rem;
+            font-size: 0.9rem;
+        }
+
+        /* 主内容区 */
+        .content {
+            flex: 1;
+            padding: 3rem;
+            overflow-y: auto;
+        }
+
+        /* 标题 */
+        h1 {
+            font-size: 2.5rem;
+            margin: 2rem 0 1rem 0;
+            color: var(--text-primary);
+            padding-bottom: 0.5rem;
+        }
+
+        h2 {
+            font-size: 2rem;
+            margin: 2.5rem 0 1.5rem 0;
+            color: var(--primary-color);
+            padding-left: 1rem;
+            border-left: 4px solid var(--primary-color);
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            margin: 1.5rem 0 1rem 0;
+            color: var(--text-primary);
+        }
+
+        h4 {
+            font-size: 1.1rem;
+            margin: 1rem 0 0.5rem 0;
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        /* 段落和文本 */
+        p {
+            margin: 1rem 0;
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+
+        strong {
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        em {
+            color: var(--primary-color);
+            font-style: italic;
+        }
+
+        /* 链接 */
+        a {
+            color: var(--primary-color);
+            text-decoration: none;
+            transition: color 0.3s ease;
+            border-bottom: 1px solid transparent;
+        }
+
+        a:hover {
+            color: var(--primary-dark);
+            border-bottom: 1px solid var(--primary-color);
+        }
+
+        /* 列表 */
+        ul, ol {
+            margin: 1rem 0 1rem 2rem;
+            color: var(--text-secondary);
+        }
+
+        li {
+            margin: 0.5rem 0;
+            line-height: 1.8;
+        }
+
+        /* 代码块 */
+        pre {
+            background: var(--code-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            overflow-x: auto;
+            margin: 1.5rem 0;
+            position: relative;
+        }
+
+        pre::before {
+            content: attr(data-language);
+            position: absolute;
+            top: 0.5rem;
+            right: 1rem;
+            font-size: 0.75rem;
+            color: #999;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        code {
+            font-family: 'Courier New', 'Monaco', monospace;
+            font-size: 0.9rem;
+            color: #d73a49;
+        }
+
+        pre code {
+            color: var(--text-primary);
+            background: none;
+            padding: 0;
+        }
+
+        /* 内联代码 */
+        :not(pre) > code {
+            background: rgba(99, 102, 241, 0.1);
+            padding: 0.2rem 0.4rem;
+            border-radius: 3px;
+            font-size: 0.9rem;
+        }
+
+        /* 引用块 */
+        blockquote {
+            border-left: 4px solid var(--info-color);
+            background: rgba(23, 162, 184, 0.05);
+            padding: 1rem 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 4px;
+        }
+
+        blockquote p {
+            margin: 0;
+            color: var(--text-secondary);
+        }
+
+        /* 提示框 */
+        .note {
+            background: rgba(23, 162, 184, 0.1);
+            border-left: 4px solid var(--info-color);
+            padding: 1rem 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 4px;
+        }
+
+        .note strong {
+            color: var(--info-color);
+        }
+
+        .warning {
+            background: rgba(255, 193, 7, 0.1);
+            border-left: 4px solid var(--warning-color);
+        }
+
+        .warning strong {
+            color: #ff9800;
+        }
+
+        .success {
+            background: rgba(40, 167, 69, 0.1);
+            border-left: 4px solid var(--success-color);
+        }
+
+        .success strong {
+            color: var(--success-color);
+        }
+
+        /* 强调框 */
+        .highlight-box {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.05), rgba(139, 92, 246, 0.05));
+            border: 2px solid var(--primary-color);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 8px;
+        }
+
+        .highlight-box h4 {
+            color: var(--primary-color);
+            margin-top: 0;
+        }
+
+        /* 水平线 */
+        hr {
+            border: none;
+            height: 2px;
+            background: linear-gradient(to right, transparent, var(--border-color), transparent);
+            margin: 2rem 0;
+        }
+
+        /* 平台图标 */
+        .platform-icon {
+            font-size: 1.2rem;
+            margin-right: 0.5rem;
+        }
+
+        /* 步骤列表 */
+        .steps {
+            counter-reset: step-counter;
+            list-style: none;
+            margin: 1.5rem 0;
+        }
+
+        .steps li {
+            counter-increment: step-counter;
+            margin: 1.5rem 0;
+            padding-left: 3rem;
+            position: relative;
+        }
+
+        .steps li::before {
+            content: counter(step-counter);
+            position: absolute;
+            left: 0;
+            top: 0;
+            background: var(--primary-color);
+            color: white;
+            width: 2.5rem;
+            height: 2.5rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+        /* 返回顶部按钮 */
+        .back-to-top {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: var(--primary-color);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            opacity: 0;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            z-index: 999;
+        }
+
+        .back-to-top.show {
+            opacity: 1;
+        }
+
+        .back-to-top:hover {
+            background: var(--primary-dark);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: static;
+                border-right: none;
+                border-bottom: 1px solid var(--border-color);
+                padding: 1.5rem;
+            }
+
+            .content {
+                padding: 1.5rem;
+            }
+
+            h1 {
+                font-size: 1.8rem;
+            }
+
+            h2 {
+                font-size: 1.4rem;
+            }
+
+            nav h1 {
+                font-size: 1.2rem;
+				margin-left: 100px;
+            }
+
+            pre {
+                padding: 1rem;
+                font-size: 0.85rem;
+            }
+
+            .back-to-top {
+                bottom: 1rem;
+                right: 1rem;
+                width: 45px;
+                height: 45px;
+            }
+        }
+
+        /* 打印样式 */
+        @media print {
+            nav {
+                position: static;
+            }
+
+            .sidebar {
+                display: none;
+            }
+
+            .back-to-top {
+                display: none;
+            }
+
+            a {
+                color: var(--primary-color);
+            }
+        }
+
+        /* 复制按钮 */
+        .copy-btn {
+            position: absolute;
+            top: 0.5rem;
+            right: 3.5rem;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.4rem 0.8rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        pre:hover .copy-btn {
+            opacity: 1;
+        }
+
+        .copy-btn:hover {
+            background: var(--primary-dark);
+        }
+
+        /* 特性卡片 */
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .feature-card {
+            background: linear-gradient(135deg, #f5f7fa 0%, #f9fafb 100%);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.1);
+            border-color: var(--primary-color);
+        }
+
+        .feature-card h4 {
+            color: var(--primary-color);
+            margin-top: 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav>
+        <h1><a href="https://wukong.support/">悟空 API</a></h1>
+        <p>国内稳定高效的AI编程工具配置指南</p>
+    </nav>
+
+    <!-- 主容器 -->
+    <div class="container">
+        <!-- 侧边栏目录 -->
+        <aside class="sidebar">
+            <h3>📑 快速导航</h3>
+            <ul>
+                <li><a href="https://wukong.support/">首页</a></li>
+                <li><a href="#intro">简介</a></li>
+                <li><a href="#requirements">系统要求</a></li>
+            </ul>
+
+            <h3>🛠️ 工具配置</h3>
+            <ul>
+                <li><a href="#claude">Claude Code</a>
+                    <ul class="nested">
+                        <li><a href="#claude-windows">Windows</a></li>
+                        <li><a href="#claude-macos">macOS</a></li>
+                        <li><a href="#claude-linux">Linux</a></li>
+                    </ul>
+                </li>
+                <li><a href="#codex">CodeX 配置</a></li>
+                <li><a href="#gemini">Gemini CLI</a></li>
+                <li><a href="#vscode">VSCode 配置</a></li>
+            </ul>
+
+            <h3>❓ 其他</h3>
+            <ul>
+                <li><a href="#faq">常见问题</a></li>
+                <li><a href="#support">获取支持</a></li>
+            </ul>
+        </aside>
+
+        <!-- 主内容区 -->
+        <main class="content">
+            <!-- 简介 -->
+            <section id="intro">
+                <h1>🚀 悟空 API - AI 编程工具配置指南</h1>
+                <p>欢迎使用 <strong><a href="https://wukong.support/">悟空 API</a></strong>！我们致力于为开发者提供稳定、高效的国内AI大模型中转服务。本文档将指导您如何配置主流的AI编程工具，以便通过我们的服务无缝接入强大的AI模型。</p>
+
+                <div class="highlight-box">
+                    <h4>✨ 悟空 API 的优势</h4>
+                    <ul>
+                        <li><strong>稳定可靠</strong>：全球节点部署，低延迟高可用</li>
+                        <li><strong>模型丰富</strong>：支持 Claude、GPT、Gemini 等主流大模型</li>
+                        <li><strong>专用分组</strong>：Claude Code、CodeX、Gemini CLI 分别提供专用令牌分组</li>
+                        <li><strong>高效缓存</strong>：独家高效缓存命中，我们的Token更耐用</li>
+                        <li><strong>开发友好</strong>：完整的文档和技术支持</li>
+                        <li><strong>价格优惠</strong>：相比官方更经济的定价方案</li>
+                    </ul>
+                </div>
+            </section>
+
+            <hr>
+
+            <!-- 系统要求 -->
+            <section id="requirements">
+                <h2>💻 系统要求</h2>
+                <p>为了确保 <strong>Claude Code</strong>, <strong>CodeX</strong>, 和 <strong>Gemini CLI</strong> 等工具能够稳定、高效地运行，请确保您的开发环境满足以下基本要求。这些工具均基于 Node.js 构建，因此核心要求在各平台间是通用的。</p>
+
+                <h3>✅ 通用核心要求 (所有平台)</h3>
+                <ul>
+                    <li><strong>Node.js</strong>: <code>18+</code> 版本是必须的。建议安装 <strong>LTS (长期支持)</strong> 版本以获得最佳的稳定性和兼容性。</li>
+                    <li><strong>网络连接</strong>: 工具需要稳定的网络连接才能访问 <strong>悟空 API</strong> 服务。</li>
+                    <li><strong>悟空 API 账户</strong>: 需要在 <a href="https://wukong.support/" target="_blank">wukong.support</a> 注册账户并获取 API 密钥。</li>
+                </ul>
+
+                <h3>📋 各平台具体要求</h3>
+
+                <h4><span class="platform-icon">🪟</span>Windows</h4>
+                <ul>
+                    <li><strong>操作系统</strong>: Windows 10 或 Windows 11</li>
+                    <li><strong>环境依赖</strong>:
+                        <ul>
+                            <li>Node.js <code>18+</code></li>
+                            <li>可用的命令行工具，如 <strong>CMD</strong>, <strong>PowerShell</strong>, 或 <strong>Windows Terminal</strong></li>
+                            <li><em>（建议）</em> 以管理员权限运行命令行进行全局安装，以避免权限问题</li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <h4><span class="platform-icon">🍎</span>macOS</h4>
+                <ul>
+                    <li><strong>操作系统</strong>: macOS 10.15 (Catalina) 或更高版本</li>
+                    <li><strong>环境依赖</strong>:
+                        <ul>
+                            <li>Node.js <code>18+</code></li>
+                            <li>终端 (Terminal)</li>
+                            <li><em>（建议）</em> 安装并使用 <a href="https://brew.sh/" target="_blank">Homebrew</a> 包管理器来简化 Node.js 的安装和管理</li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <h4><span class="platform-icon">🐧</span>Linux</h4>
+                <ul>
+                    <li><strong>操作系统</strong>: 支持主流的 Linux 发行版，包括但不限于：
+                        <ul>
+                            <li>Ubuntu <code>18.04+</code></li>
+                            <li>Debian <code>9+</code></li>
+                            <li>CentOS <code>7+</code></li>
+                        </ul>
+                    </li>
+                    <li><strong>环境依赖</strong>:
+                        <ul>
+                            <li>Node.js <code>18+</code></li>
+                            <li>终端 (Terminal)</li>
+                            <li>进行全局安装时可能需要 <code>sudo</code> 权限</li>
+                        </ul>
+                    </li>
+                </ul>
+            </section>
+
+            <hr>
+
+            <!-- Claude Code 配置 -->
+            <section id="claude">
+                <h2>🔧 Claude Code 安装与配置</h2>
+                <p>Claude Code 是由 Anthropic 官方发布的一款强大的命令行 AI 编程助手。通过以下步骤，您可以将其接入悟空 API 服务。悟空 API 为 Claude Code 提供专用的令牌分组，支持以下最新模型：</p>
+                
+                <div class="highlight-box">
+                    <h4>📌 支持的模型版本</h4>
+                    <ul>
+                        <li><code>claude-opus-4-5-20251101</code> - 主流 Sonnet 版本</li>
+                        <li><code>claude-sonnet-4-5-20250929</code> - 最新 Sonnet 版本</li>
+                        <li><code>claude-haiku-4-5-20251001</code> - Haiku 4.5 版本 (轻量级)</li>
+                    </ul>
+                </div>
+
+                <h3>快速开始流程</h3>
+                <ol class="steps">
+                    <li><strong>安装 Node.js</strong>: 确保您的系统环境已准备就绪。</li>
+                    <li><strong>安装 Claude Code CLI</strong>: 通过 npm 全局安装命令行工具。</li>
+                    <li><strong>配置悟空 API</strong>: 创建配置文件，填入您的专属 API 密钥和我们的服务地址。</li>
+                    <li><strong>启动与使用</strong>: 在您的项目目录中启动 Claude Code，开始智能编程。</li>
+                </ol>
+
+                <!-- Windows 教程 -->
+                <h3 id="claude-windows"><span class="platform-icon">🪟</span>Windows 平台安装教程</h3>
+
+                <h4>步骤 1：安装 Node.js</h4>
+                <ul>
+                    <li><strong>推荐方法</strong>: 访问 <a href="https://nodejs.org" target="_blank">Node.js 官网</a>，下载并安装 <strong>LTS (长期支持)</strong> 版本的 Windows 安装程序 (.msi)。</li>
+                    <li><strong>备用方法</strong>: 使用 <code>winget</code> 等包管理器进行安装。
+                        <pre data-language="powershell"># 使用 Winget 安装
+winget install OpenJS.NodeJS.LTS</pre>
+                    </li>
+                    <li><strong>验证安装</strong>: 安装完成后，打开新的命令行窗口（CMD 或 PowerShell）并运行：
+                        <pre data-language="bash">node --version
+npm --version</pre>
+                    </li>
+                </ul>
+
+                <h4>步骤 2：安装 Claude Code CLI</h4>
+                <p>以 <strong>管理员身份</strong> 运行命令行窗口，执行以下命令进行全局安装：</p>
+                <pre data-language="bash">npm install -g @anthropic-ai/claude-code</pre>
+                <p>安装后，通过 <code>claude --version</code> 命令验证是否成功。</p>
+
+                <h4>步骤 3：配置悟空 API</h4>
+                <ol>
+                    <li><strong>获取 API 密钥</strong>:
+                        <ul>
+                            <li>访问 <a href="https://wukong.support/console/token" target="_blank"><strong>悟空 API 控制台</strong></a> 并登录。</li>
+                            <li>选择 <strong>Claude Code 专用分组</strong>。</li>
+                            <li>创建一个新的令牌。</li>
+                            <li>复制生成的密钥。</li>
+                        </ul>
+                    </li>
+                    <li><strong>创建配置文件</strong>:
+                        <ul>
+                            <li>找到或创建以下路径的配置文件：<code>%USERPROFILE%\.claude\settings.json</code>。</li>
+                            <li>将以下内容填入 <code>settings.json</code> 文件中：
+                                <pre data-language="json">
+{  
+    "env": {
+    "ANTHROPIC_AUTH_TOKEN": "粘贴您从 wukong.support 获取的密钥",
+    "ANTHROPIC_BASE_URL": "https://api.wukong.support"
+  }
+}</pre>
+                            </li>
+                            <li>一键配置脚本：<a href="/docs/static/cli/win_claude_setup.bat">点击下载</a>，双击运行。</li>
+                        </ul>
+                    </li>
+                </ol>
+                <div class="note warning">
+                    <strong>⚠️ 重要提示</strong>: 
+                    <ul>
+                        <li>请务必将 <code>ANTHROPIC_AUTH_TOKEN</code> 的值替换为您自己的密钥。</li>
+                        <li>创建令牌时，请选择 <strong>Claude Code 专用分组</strong>，以确保兼容性。</li>
+                    </ul>
+                </div>
+
+                <h4>步骤 4：启动与使用</h4>
+                <ol>
+                    <li>打开命令行，进入您的项目文件夹。
+                        <pre data-language="bash">cd your-project-folder</pre>
+                    </li>
+                    <li>运行 <code>claude</code> 命令启动工具，并根据首次运行的提示完成初始化设置即可。</li>
+                </ol>
+
+                <!-- macOS 教程 -->
+                <h3 id="claude-macos"><span class="platform-icon">🍎</span>macOS 平台安装教程</h3>
+
+                <h4>步骤 1：安装 Node.js</h4>
+                <ul>
+                    <li><strong>推荐方法</strong>: 使用 Homebrew 进行安装。
+                        <pre data-language="bash"># 如果未安装 Homebrew，请先安装
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+# 安装 Node.js
+brew install node</pre>
+                    </li>
+                    <li><strong>备用方法</strong>: 前往 <a href="https://nodejs.org" target="_blank">Node.js 官网</a> 下载 <code>.pkg</code> 安装包。</li>
+                    <li><strong>验证安装</strong>: <code>node --version</code> 和 <code>npm --version</code>。</li>
+                </ul>
+
+                <h4>步骤 2：安装 Claude Code CLI</h4>
+                <p>打开终端并执行：</p>
+                <pre data-language="bash">npm install -g @anthropic-ai/claude-code</pre>
+
+                <h4>步骤 3：配置悟空 API</h4>
+                <ol>
+                    <li><strong>获取 API 密钥</strong>: 
+                        <ul>
+                            <li>访问 <a href="https://wukong.support/console/token" target="_blank">悟空 API 控制台</a>。</li>
+                            <li>选择 <strong>Claude Code 专用分组</strong>。</li>
+                            <li>创建令牌并复制密钥。</li>
+                        </ul>
+                    </li>
+                    <li><strong>创建配置文件</strong>:
+                        <ul>
+                            <li>在用户主目录下找到或创建配置文件：<code>~/.claude/settings.json</code>。</li>
+                            <li>填入以下内容：
+                                <pre data-language="json">{
+  "env": {
+    "ANTHROPIC_AUTH_TOKEN": "粘贴您从 wukong.support 获取的密钥",
+    "ANTHROPIC_BASE_URL": "https://api.wukong.support"
+  }
+}</pre>
+                            </li>
+                            <li>一键配置脚本：
+                                <pre data-language="bash">bash <(curl -fsSL /docs/static/cli/linux_claude_setup.sh)</pre>
+                            </li>
+                        </ul>
+                    </li>
+                </ol>
+
+                <h4>步骤 4：启动与使用</h4>
+                <ol>
+                    <li>打开终端，<code>cd</code> 到您的项目目录。</li>
+                    <li>运行 <code>claude</code> 命令即可开始。</li>
+                </ol>
+
+                <!-- Linux 教程 -->
+                <h3 id="claude-linux"><span class="platform-icon">🐧</span>Linux 平台安装教程</h3>
+
+                <h4>步骤 1：安装 Node.js</h4>
+                <p>使用您的发行版包管理器进行安装。以 Ubuntu/Debian 为例：</p>
+                <pre data-language="bash"># 推荐使用 NodeSource 获取较新版本
+curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash -
+sudo apt-get install -y nodejs</pre>
+                <p><strong>验证安装</strong>: <code>node --version</code> 和 <code>npm --version</code>。</p>
+
+                <h4>步骤 2：安装 Claude Code CLI</h4>
+                <p>打开终端并执行：</p>
+                <pre data-language="bash">sudo npm install -g @anthropic-ai/claude-code</pre>
+
+                <h4>步骤 3：配置悟空 API</h4>
+                <ol>
+                    <li><strong>获取 API 密钥</strong>: 
+                        <ul>
+                            <li>访问 <a href="https://wukong.support/console/token" target="_blank">悟空 API 控制台</a>。</li>
+                            <li>选择 <strong>Claude Code 专用分组</strong>。</li>
+                            <li>创建令牌并复制密钥。</li>
+                        </ul>
+                    </li>
+                    <li><strong>创建配置文件</strong>:
+                        <ul>
+                            <li>在用户主目录下找到或创建配置文件：<code>~/.claude/settings.json</code>。</li>
+                            <li>填入以下内容：
+                                <pre data-language="json">{
+  "env": {
+    "ANTHROPIC_AUTH_TOKEN": "粘贴您从 wukong.support 获取的密钥",
+    "ANTHROPIC_BASE_URL": "https://api.wukong.support"
+  }
+}</pre>
+                            </li>
+                            <li>一键配置脚本：
+                                <pre data-language="bash">bash <(curl -fsSL /docs/static/cli/linux_claude_setup.sh)</pre>
+                            </li>
+                        </ul>
+                    </li>
+                </ol>
+
+                <h4>步骤 4：启动与使用</h4>
+                <ol>
+                    <li>打开终端，<code>cd</code> 到您的项目目录。</li>
+                    <li>运行 <code>claude</code> 命令即可开始。</li>
+                </ol>
+            </section>
+
+            <hr>
+
+            <!-- CodeX 配置 -->
+            <section id="codex">
+                <h2>🚀 CodeX 安装与配置</h2>
+                <p>CodeX 是基于 OpenAI GPT 模型的强大代码助手。按照以下步骤，您可以将其配置为使用悟空 API 服务。</p>
+
+                <div class="highlight-box">
+                    <h4>📌 重要说明</h4>
+                    <p>创建 API 令牌时，请务必选择 <strong>CodeX 专用分组</strong>，以确保最佳的兼容性和性能。</p>
+                </div>
+
+                <h3>步骤 1：安装 Node.js</h3>
+                <div class="note">
+                    <strong>💡 提示</strong>: 此步骤与 Claude Code 的安装教程完全相同。如果已经安装，请跳过。
+                </div>
+
+                <h3>步骤 2：安装 CodeX CLI</h3>
+                <p>打开命令行或终端，执行以下命令进行全局安装：</p>
+                <pre data-language="bash"># Windows 用户请以管理员身份运行
+# macOS/Linux 用户可能需要添加 sudo
+npm install -g @openai/codex@latest</pre>
+                <p>安装后，通过 <code>codex --version</code> 命令验证是否成功。</p>
+
+                <h3>步骤 3：配置悟空 API</h3>
+                <p>CodeX 的配置分为 <code>config.toml</code> 和 <code>auth.json</code> 两个文件。</p>
+
+                <ol>
+                    <li><strong>获取 API 密钥</strong>:
+                        <ul>
+                            <li>访问 <a href="https://wukong.support/console/token" target="_blank"><strong>悟空 API 控制台</strong></a>。</li>
+                            <li>选择 <strong>CodeX 专用分组</strong>。</li>
+                            <li>创建一个新的令牌。</li>
+                            <li>复制生成的密钥。</li>
+                        </ul>
+                    </li>
+                    <li><strong>创建配置文件</strong>:
+                        <ul>
+                            <li>在您的用户主目录下创建一个名为 <code>.codex</code> 的文件夹。
+                                <ul>
+                                    <li>Windows: <code>%USERPROFILE%\.codex</code></li>
+                                    <li>macOS/Linux: <code>~/.codex</code></li>
+                                </ul>
+                            </li>
+                            <li>在该文件夹内，创建以下两个文件：</li>
+                        </ul>
+                    </li>
+                </ol>
+
+                <p><strong><code>config.toml</code></strong></p>
+                <pre data-language="toml">model_provider = "wukong"
+model = "gpt-5.2-codex"
+model_reasoning_effort = "high"
+network_access = "enabled"
+disable_response_storage = true
+
+[model_providers.wukong]
+name = "wukong"
+base_url = "https://api.wukong.support/v1"
+wire_api = "responses"
+requires_openai_auth = true</pre>
+
+                <p><strong><code>auth.json</code></strong></p>
+                <pre data-language="json">{
+  "OPENAI_API_KEY": "粘贴您从 wukong.support 获取的密钥"
+}</pre>
+
+
+<p>Windows 一键配置脚本：<a href="/docs/static/cli/win_codex_setup.bat">点击下载</a>，双击运行。</p>
+
+<p>Linux / MacOS 一键配置脚本： <pre data-language="bash">bash <(curl -fsSL /docs/static/cli/linux_codex_setup.sh)</pre></p>
+
+                <div class="note warning">
+                    <strong>⚠️ 重要提示</strong>: 
+                    <ul>
+                        <li>请确保在控制台创建令牌时选择了 <strong>CodeX 专用分组</strong>。</li>
+                        <li>配置文件中的 <code>base_url</code> 必须是 <code>https://api.wukong.support/v1</code>。</li>
+                    </ul>
+                </div>
+
+                <h3>步骤 4：启动与使用</h3>
+                <ol>
+                    <li>打开终端，<code>cd</code> 到您的项目目录。</li>
+                    <li>运行 <code>codex</code> 命令即可启动。</li>
+                </ol>
+            </section>
+
+            <hr>
+
+            <!-- Gemini CLI 配置 -->
+            <section id="gemini">
+                <h2>💎 Gemini CLI 安装与配置</h2>
+                <p>Gemini CLI 是 Google 的官方命令行工具，可让您直接与强大的 Gemini 模型交互。</p>
+
+                <div class="highlight-box">
+                    <h4>📌 重要说明</h4>
+                    <p>创建 API 令牌时，请务必选择 <strong>Gemini CLI 专用分组</strong>，以确保最佳的兼容性和性能。</p>
+                </div>
+
+                <h3>步骤 1：安装 Node.js</h3>
+                <div class="note">
+                    <strong>💡 提示</strong>: 此步骤与 Claude Code 的安装教程完全相同。如果已经安装，请跳过。
+                </div>
+
+                <h3>步骤 2：安装 Gemini CLI</h3>
+                <p>打开命令行或终端，执行以下命令进行全局安装：</p>
+                <pre data-language="bash"># Windows 用户请以管理员身份运行
+# macOS/Linux 用户可能需要添加 sudo
+npm install -g @google/gemini-cli</pre>
+
+                <h3>步骤 3：配置悟空 API</h3>
+                <ol>
+                    <li><strong>获取 API 密钥</strong>:
+                        <ul>
+                            <li>访问 <a href="https://wukong.support/console/token" target="_blank"><strong>悟空 API 控制台</strong></a>。</li>
+                            <li>选择 <strong>Gemini CLI 专用分组</strong>。</li>
+                            <li>创建一个新的令牌。</li>
+                            <li>复制生成的密钥。</li>
+                        </ul>
+                    </li>
+                    <li><strong>创建配置文件</strong>:
+                        <ul>
+                            <li>在您的用户主目录下创建一个名为 <code>.gemini</code> 的文件夹。
+                                <ul>
+                                    <li>Windows: <code>%USERPROFILE%\.gemini</code></li>
+                                    <li>macOS/Linux: <code>~/.gemini</code></li>
+                                </ul>
+                            </li>
+                            <li>在该文件夹内，创建以下两个文件：</li>
+                        </ul>
+                    </li>
+                </ol>
+
+                <p><strong><code>.env</code></strong></p>
+                <pre data-language="env">GOOGLE_GEMINI_BASE_URL=https://api.wukong.support
+GEMINI_API_KEY=粘贴您从 wukong.support 获取的密钥
+GEMINI_MODEL=gemini-2.5-pro</pre>
+
+                <p><strong><code>settings.json</code></strong></p>
+                <pre data-language="json">{
+  "ide": {
+    "enabled": true
+  },
+  "security": {
+    "auth": {
+      "selectedType": "gemini-api-key"
+    }
+  }
+}</pre>
+
+<p>Windows 一键配置脚本：<a href="/docs/static/cli/win_gemini_setup.bat">点击下载</a>，双击运行。</p>
+
+<p>Linux / MacOS 一键配置脚本： <pre data-language="bash">bash <(curl -fsSL /docs/static/cli/linux_gemini_setup.sh)</pre></p>
+
+                <div class="note warning">
+                    <strong>⚠️ 重要提示</strong>: 
+                    <ul>
+                        <li>请确保在控制台创建令牌时选择了 <strong>Gemini CLI 专用分组</strong>。</li>
+                        <li>配置文件中的 <code>GOOGLE_GEMINI_BASE_URL</code> 必须是 <code>https://api.wukong.support</code>。</li>
+                    </ul>
+                </div>
+
+                <h3>步骤 4：启动与使用</h3>
+                <ol>
+                    <li>打开终端，<code>cd</code> 到您的项目目录。</li>
+                    <li>运行 <code>gemini</code> 命令即可开始与 Gemini 2.5 Pro 互动。</li>
+                </ol>
+            </section>
+
+            <hr>
+
+            <!-- VSCode 配置 -->
+          <section id="vscode">
+    <h2>🔧 Visual Studio Code (VSCode) 通用配置（1 分钟极速版）</h2>
+    <p>适用于 VSCode、Cursor、Trae 等所有编辑器，只需 1 分钟即可完成 AI 编程环境配置。</p>
+    <p>Cursor现在已限制了第三方API使用！请安装插件使用</p>
+
+    <h3>步骤 1：安装插件</h3>
+    <ul>
+        <li>打开 VSCode（Cursor、Trae同理） → 扩展商店（Ctrl+Shift+X）</li>
+        <li>搜索并安装以下任意插件：
+            <ul>
+                <li>Claude Code</li>
+                <li>Codex – OpenAI</li>
+            </ul>
+        </li>
+    </ul>
+
+    <h3>步骤 2：运行一键配置脚本（推荐）</h3>
+
+    <h4>Claude Code</h4>
+    <p>Windows 一键配置：</p>
+    <p><a href="/docs/static/cli/win_claude_setup.bat">点击下载 claude_setup.bat</a>，双击运行</p>
+
+    <p>Linux / macOS 一键配置：</p>
+    <pre data-language="bash">bash <(curl -fsSL /docs/static/cli/linux_claude_setup.sh)</pre>
+
+    <hr>
+
+    <h4>CodeX</h4>
+    <p>Windows 一键配置：</p>
+    <p><a href="/docs/static/cli/win_codex_setup.bat">点击下载 codex_setup.bat</a>，双击运行</p>
+
+    <p>Linux / macOS 一键配置：</p>
+    <pre data-language="bash">bash <(curl -fsSL /docs/static/cli/linux_codex_setup.sh)</pre>
+
+
+    <hr>
+
+    <h3>如果你不想用脚本，也可以手动填 API（可选）</h3>
+    <p>打开 VSCode 设置 JSON：</p>
+    <ul>
+        <li>Ctrl+Shift+P → 输入 “Preferences: Open Settings (JSON)”</li>
+    </ul>
+
+    <p>根据插件不同填入对应字段，例如：</p>
+    <pre data-language="json">{
+  "chatgpt.apiBase": "https://api.wukong.support/v1",
+  "chatgpt.config": {
+    "preferred_auth_method": "apikey"
+  }
+}</pre>
+
+    <div class="note warning">
+        <strong>提示：</strong>
+        <ul>
+            <li>密钥在悟空 API 控制台创建（对应工具专用分组）</li>
+            <li>脚本会自动完成配置，无需手动编辑 JSON</li>
+        </ul>
+    </div>
+</section>
+
+
+            <hr>
+
+            <!-- 常见问题 -->
+            <section id="faq">
+                <h2>❓ 常见问题</h2>
+
+                 <h3>Q1: 安装Claude Code后被挡在登录页？</h3>
+                 
+                 <img src="/docs/static/images/claude_q1_001.png" style="max-width: 600px;">
+                 
+				 <p>Claude Code 2.0.65+ 版本强制登录检查</p>
+				 
+				 <p>Windows 一键配置：</p>
+				 <p><a href="/docs/static/cli/skip_claude_login.bat">点击下载 skip_claude_login.bat</a>，双击运行</p>
+
+				<p>Linux / macOS 一键配置：</p>
+				<pre data-language="bash">bash <(curl -fsSL /docs/static/cli/skip_claude_login.sh)</pre>
+				 
+                 <p>如果执行一键脚本失败，请手动配置，打开配置文件</p>
+                 <p>Windows：%USERPROFILE%\.claude.json</p>
+                 <p>Linux/macOS：~/.claude.json</p>
+                 <p>在最后添加 "hasCompletedOnboarding": true <span style="color:red">不要直接复制下面替换你的配置</span></p>
+                 
+    <pre data-language="json">{
+  "installMethod": "unknown",
+  "autoUpdates": true,
+  "firstStartTime": "2025-07-14T06:11:03.877Z",
+  "userID": "f5afdd05117c901a4a5a0761d08230bfcbb76f9fd380ff7bc144cc12c52e55aa",
+  "projects": {
+    "/home/nassi": {
+      "allowedTools": [],
+      "history": [],
+      "mcpContextUris": [],
+      "mcpServers": {},
+      "enabledMcpjsonServers": [],
+      "disabledMcpjsonServers": [],
+      "hasTrustDialogAccepted": false,
+      "projectOnboardingSeenCount": 0,
+      "hasClaudeMdExternalIncludesApproved": false,
+      "hasClaudeMdExternalIncludesWarningShown": false
+    }
+  },  //这里要加逗号，注意英文的
+  "hasCompletedOnboarding": true  // 新增字段放在这里，注意位置
+}
+</pre>
+
+
+                <h3>Q2: 在Claude Code使用API 400报错 “ValidationException: invalid beta flag”？</h3>
+                 
+                <img src="/docs/static/images/claude_q2_001.png" style="max-width: 750px;">
+                 
+				<p>打开配置文件</p>
+				<p>Windows：%USERPROFILE%\.claude\settings.json</p>
+
+				<p>Linux/macOS：~/.claude/settings.json</p>
+				
+				添加环境变量 <code>"CLAUDE_CODE_DISABLE_EXPERIMENTAL_BETAS": "1"</code> 如下示例：
+<pre data-language="json">{
+  "env": {
+    "ANTHROPIC_AUTH_TOKEN": "sk-xxx",
+    "ANTHROPIC_BASE_URL": "https://api.wukong.support",
+    "CLAUDE_CODE_DISABLE_EXPERIMENTAL_BETAS": "1"
+  }
+}
+</pre>
+				<h3>Q3: Claude Code 配置不回复内容？</h3>
+				
+                <p>1. 请先确保您的平台账号有足够余额</p>
+                <p>2. 确认您的令牌密钥是否设置模型限制，解除限制</p>
+				<p>3. 关掉梯子，切换手机流量网络测试</p>
+                
+				<p>3. 打开配置文件</p>
+				<p>Windows：%USERPROFILE%\.claude\settings.json</p>
+
+				<p>Linux/macOS：~/.claude/settings.json</p>
+				
+				<p>确保配置文件干净，确实是否如下，sk-xxx替换为自己的apikey</p>
+				
+				    <pre data-language="json">
+{
+  "env": {
+    "ANTHROPIC_AUTH_TOKEN": "sk-xxx",
+    "ANTHROPIC_BASE_URL": "https://api.wukong.support"
+  }
+}
+</pre>
+				
+				<h3>Q4: Claude Code 怎样指定模型？</h3>
+				
+				<p>在cli对话框输入：<code>/model</code> 选择指定模型</p>
+				
+				<h3>Q5: Claude Code 怎样使用非Claude模型？</h3>
+				
+				<p>Windows：%USERPROFILE%\.claude\settings.json</p>
+
+				<p>Linux/macOS：~/.claude/settings.json</p>
+				
+				<p>参考下面配置，按需替换即可。</p>
+				
+				 <pre data-language="json">
+{
+  "ANTHROPIC_MODEL": "glm-5",
+  "env": {
+    "ANTHROPIC_AUTH_TOKEN": "sk-xxx",
+    "ANTHROPIC_BASE_URL": "https://api.wukong.support",
+    "ANTHROPIC_DEFAULT_HAIKU_MODEL": "glm-5",
+    "ANTHROPIC_DEFAULT_OPUS_MODEL": "minimax-m2.5",
+    "ANTHROPIC_DEFAULT_SONNET_MODEL": "glm-5",
+    "ANTHROPIC_MODEL": "glm-5",
+    "ANTHROPIC_REASONING_MODEL": "glm-5"
+  }
+}
+</pre>
+				
+                <h3>Q6: Claude Code 配置冲突？</h3>
+				
+                <p>如果Windows下环境变量冲突，PowerShell 中执行下面两次命令：</p>
+                 
+                <pre data-language="shell">[Environment]::SetEnvironmentVariable("ANTHROPIC_BASE_URL", "https://api.wukong.support", "User")</pre>
+                <pre data-language="shell">[Environment]::SetEnvironmentVariable("ANTHROPIC_AUTH_TOKEN", "sk-xxx", "User")</pre>
+                
+                <p>sk-xxx替换为自己的apikey</p>
+
+                <h3>Q7: 为什么需要选择专用分组？</h3>
+                <p><strong>A:</strong> 不同的工具（Claude Code、CodeX、Gemini CLI）对 API 的调用方式和参数要求不同。悟空 API 为每个工具提供了专门优化的分组，确保最佳的兼容性和性能。使用错误的分组可能导致连接失败或功能异常。</p>
+
+                <h3>Q8: 如何查看我的 API 使用情况？</h3>
+                <p><strong>A:</strong> 登录 <a href="https://wukong.support/console" target="_blank">悟空 API 控制台</a>，在仪表板中可以查看详细的使用统计和账单信息。</p>
+
+                <h3>Q9: 配置后无法连接怎么办？</h3>
+                <p><strong>A:</strong> 请检查以下几点：</p>
+                <ul>
+                    <li>确认 API 密钥是否正确复制（没有多余的空格）</li>
+                    <li>确认选择了正确的专用分组</li>
+                    <li>确认配置文件路径正确</li>
+                    <li>检查网络连接是否正常</li>
+                    <li>查看工具的日志输出，寻找错误信息</li>
+                </ul>
+
+                <h3>Q10: 支持哪些模型？</h3>
+                <p><strong>A:</strong> 悟空 API 支持多种主流 AI 模型：</p>
+                <ul>
+                    <li><strong>Claude 系列</strong>: claude-opus-4-5-20251101, claude-sonnet-4-5-20250929, claude-haiku-4-5-20251001</li>
+                    <li><strong>GPT 系列</strong>: gpt-5.2-codex</li>
+                    <li><strong>Gemini 系列</strong>: gemini-3-pro-preview</li>
+                </ul>
+
+                <h3>Q10: 价格如何计算？</h3>
+                <p><strong>A:</strong> 悟空 API 采用按使用量计费的模式，具体价格请访问 <a href="https://wukong.support/modellist/" target="_blank">价格页面</a> 查看。我们提供比官方更优惠的价格，同时保证服务质量。</p>
+            </section>
+
+            <hr>
+
+            <!-- 获取支持 -->
+			<section id="support">
+				<h2>💬 获取支持</h2>
+				<p>如果您在使用过程中遇到任何问题，可通过以下方式联系我们：</p>
+
+				<div class="feature-grid" style="grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); max-width: 800px; margin: 2rem auto;">
+					<div class="feature-card" style="text-align: center;">
+						<h4>💬 即时客服</h4>
+						<p>qq客服：515199667</p>
+						<p>Telegram: @wukongapi</p>
+					</div>
+
+					<div class="feature-card" style="text-align: center;">
+						<h4>📧 邮件支持</h4>
+						<p>wukongapi@gmail.com</p>
+						<p>工作日 9:00-22:00 在线响应</p>
+					</div>
+				</div>
+			</section>
+
+            <!-- 页脚 -->
+            <footer style="margin-top: 4rem; padding: 2rem 0; border-top: 1px solid var(--border-color); text-align: center; color: var(--text-secondary);">
+                <p style="margin-bottom: 0.5rem;">© 2025 悟空 API. 为开发者提供稳定、高效的AI模型中转服务。</p>
+                <p style="margin-bottom: 1rem;">全球节点 · 低延迟 · 高可用 · 专业支持</p>
+                <p>
+                    <a href="https://wukong.support" target="_blank" style="margin: 0 1rem;">官网</a>
+                    <a href="/docs/" target="_blank" style="margin: 0 1rem;">文档</a>
+                    <a href="https://wukong.support/modellist/" target="_blank" style="margin: 0 1rem;">价格</a>
+                    <a href="https://wukong.support/console" target="_blank" style="margin: 0 1rem;">控制台</a>
+                </p>
+            </footer>
+        </main>
+    </div>
+
+    <!-- 返回顶部按钮 -->
+    <div class="back-to-top" id="backToTop">
+        ↑
+    </div>
+
+    <script>
+        // 返回顶部功能
+        const backToTopBtn = document.getElementById('backToTop');
+        
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                backToTopBtn.classList.add('show');
+            } else {
+                backToTopBtn.classList.remove('show');
+            }
+        });
+
+        backToTopBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // 侧边栏导航高亮
+        const sections = document.querySelectorAll('section[id]');
+        const navLinks = document.querySelectorAll('.sidebar a[href^="#"]');
+
+        function highlightNavigation() {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (window.pageYOffset >= sectionTop - 200) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === '#' + current) {
+                    link.classList.add('active');
+                }
+            });
+        }
+
+        window.addEventListener('scroll', highlightNavigation);
+
+        // 平滑滚动
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const targetId = link.getAttribute('href').substring(1);
+                const targetSection = document.getElementById(targetId);
+                if (targetSection) {
+                    targetSection.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // 代码复制功能
+		document.querySelectorAll('pre').forEach(pre => {
+			// 在添加按钮前保存原始代码文本
+			const codeElement = pre.querySelector('code');
+			const originalCode = codeElement ? codeElement.textContent : pre.textContent;
+			
+			const copyBtn = document.createElement('button');
+			copyBtn.className = 'copy-btn';
+			copyBtn.textContent = '复制';
+			copyBtn.addEventListener('click', () => {
+				navigator.clipboard.writeText(originalCode).then(() => {
+					copyBtn.textContent = '已复制!';
+					setTimeout(() => {
+						copyBtn.textContent = '复制';
+					}, 2000);
+				});
+			});
+			pre.style.position = 'relative';
+			pre.appendChild(copyBtn);
+		});
+
+
+        // 初始化导航高亮
+        highlightNavigation();
+
+        // 添加键盘快捷键支持
+        document.addEventListener('keydown', (e) => {
+            // Ctrl/Cmd + K 快速搜索（模拟）
+            if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+                e.preventDefault();
+                alert('搜索功能开发中...');
+            }
+        });
+
+        // 响应式侧边栏切换（移动端）
+        if (window.innerWidth <= 768) {
+            const sidebar = document.querySelector('.sidebar');
+            const toggleBtn = document.createElement('button');
+            toggleBtn.innerHTML = '☰ 目录';
+            toggleBtn.style.cssText = `
+                position: fixed;
+                top: 1rem;
+                left: 1rem;
+                z-index: 1001;
+                background: var(--primary-color);
+                color: white;
+                border: none;
+                padding: 0.5rem 1rem;
+                border-radius: 4px;
+                cursor: pointer;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+            `;
+            
+            document.body.appendChild(toggleBtn);
+            
+            toggleBtn.addEventListener('click', () => {
+                if (sidebar.style.display === 'none' || sidebar.style.display === '') {
+                    sidebar.style.display = 'block';
+                    sidebar.style.position = 'fixed';
+                    sidebar.style.top = '0';
+                    sidebar.style.left = '0';
+                    sidebar.style.height = '100vh';
+                    sidebar.style.zIndex = '1000';
+                    sidebar.style.overflowY = 'auto';
+                    toggleBtn.innerHTML = '✕ 关闭';
+                } else {
+                    sidebar.style.display = 'none';
+                    toggleBtn.innerHTML = '☰ 目录';
+                }
+            });
+            
+            // 默认隐藏侧边栏
+            sidebar.style.display = 'none';
+            
+            // 点击侧边栏链接后自动关闭
+            navLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    if (window.innerWidth <= 768) {
+                        sidebar.style.display = 'none';
+                        toggleBtn.innerHTML = '☰ 目录';
+                    }
+                });
+            });
+        }
+
+        // 添加页面加载动画
+        window.addEventListener('load', () => {
+            document.body.style.opacity = '0';
+            setTimeout(() => {
+                document.body.style.transition = 'opacity 0.5s ease';
+                document.body.style.opacity = '1';
+            }, 100);
+        });
+    </script>
+</body>
+</html>

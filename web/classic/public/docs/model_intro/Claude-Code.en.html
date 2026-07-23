@@ -1,0 +1,2265 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Claude Code installation and configuration complete guide | Wukong API access Windows/macOS/Linux tutorial</title>
+    <meta name="keywords" content="Claude Code installation, Claude Code configuration, Wukong API access, AI programming assistant, Windows installation Claude Code, macOS installation Claude Code, Linux installation Claude Code, VSCode Claude plug-in, AI code generation, AI code review">
+    <meta name="description" content="Complete Claude Code installation and configuration tutorial, supporting three major platforms: Windows, macOS, and Linux. Detailed explanation of Wukong API access method, supporting Claude Sonnet, Qwen3-Coder, Kimi-K2 and other models. Covers VSCode plug-in configuration, FAQs, and best practices to help you quickly get started with the AI ​​programming assistant and efficiently complete tasks such as code generation, review, and debugging.">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #4361ee;
+            --secondary: #3f37c9;
+            --accent: #4cc9f0;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --success: #4caf50;
+            --warning: #ff9800;
+            --danger: #f44336;
+            --gray: #6c757d;
+            --light-gray: #e9ecef;
+            --border-radius: 10px;
+            --box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4edf5 100%);
+            padding: 0;
+            margin: 0;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        header {
+            background: linear-gradient(120deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 1rem 0;
+            box-shadow: var(--box-shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo i {
+            font-size: 2.5rem;
+        }
+
+        .logo h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+
+        .logo span {
+            color: var(--accent);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 20px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 8px 15px;
+            border-radius: 30px;
+            transition: var(--transition);
+        }
+
+        nav a:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 4rem 0;
+            text-align: center;
+            background: url('https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80') no-repeat center center/cover;
+            position: relative;
+            color: white;
+            margin-bottom: 3rem;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(67, 97, 238, 0.85);
+        }
+
+        .hero-content {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .hero h2 {
+            font-size: 2.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: var(--accent);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: var(--transition);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+
+        .cta-button:hover {
+            background: white;
+            color: var(--primary);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+        }
+
+        /* Main Content */
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            gap: 30px;
+            margin-bottom: 3rem;
+        }
+
+        /* Sections */
+        .section {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: var(--box-shadow);
+            transition: var(--transition);
+        }
+
+        .section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+
+        .section h3 {
+            color: var(--primary);
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--light-gray);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.8rem;
+        }
+
+        .section h4 {
+            color: var(--secondary);
+            margin: 25px 0 15px 0;
+            font-size: 1.3rem;
+        }
+
+        .section h3 i {
+            color: var(--accent);
+        }
+
+        .section-content {
+            padding: 15px 0;
+        }
+
+        /* Platform Icons */
+        .platform-icon {
+            font-size: 1.3rem;
+            margin-right: 8px;
+        }
+
+        /* Code Blocks */
+        pre {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: var(--border-radius);
+            overflow-x: auto;
+            margin: 20px 0;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            position: relative;
+        }
+
+        code {
+            font-family: 'Fira Code', monospace;
+        }
+
+        /* Copy Button */
+        .copy-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 5px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            opacity: 0.7;
+            transition: var(--transition);
+        }
+
+        .copy-btn:hover {
+            opacity: 1;
+            background: var(--primary);
+        }
+
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid var(--light-gray);
+        }
+
+        th {
+            background: var(--primary);
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background: var(--light-gray);
+        }
+
+        tr:hover {
+            background: rgba(67, 97, 238, 0.05);
+        }
+
+        /* Lists */
+        ul, ol {
+            padding-left: 30px;
+            margin: 15px 0;
+        }
+
+        li {
+            margin-bottom: 10px;
+        }
+
+        /* Step Lists - 只匹配第一层 li */
+		.steps {
+			counter-reset: step-counter;
+			list-style: none;
+			padding: 0;
+		}
+
+		.steps > li {
+			counter-increment: step-counter;
+			margin: 1.5rem 0;
+			padding-left: 3rem;
+			position: relative;
+		}
+
+		.steps > li::before {
+			content: counter(step-counter);
+			position: absolute;
+			left: 0;
+			top: 0;
+			background: var(--primary);
+			color: white;
+			width: 2.5rem;
+			height: 2.5rem;
+			border-radius: 50%;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			font-weight: 600;
+			font-size: 1rem;
+		}
+
+		/* 嵌套列表恢复正常样式 */
+		.steps > li ul,
+		.steps > li ol {
+			margin-top: 0.8rem;
+			margin-bottom: 0.8rem;
+			padding-left: 1.5rem;
+		}
+
+		.steps > li ul li,
+		.steps > li ol li {
+			counter-increment: none;
+			padding-left: 0;
+			margin: 0.5rem 0;
+			position: static;
+		}
+
+		.steps > li ul li::before,
+		.steps > li ol li::before {
+			display: none;
+		}
+
+		/* 恢复嵌套列表的默认标记 */
+		.steps > li ul {
+			list-style: disc;
+		}
+
+		.steps > li ol {
+			list-style: decimal;
+		}
+
+
+        /* Sidebar */
+        .sidebar {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 25px;
+            box-shadow: var(--box-shadow);
+            position: sticky;
+            top: 100px;
+            height: fit-content;
+        }
+
+        .sidebar h3 {
+            color: var(--primary);
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--light-gray);
+            font-size: 1.2rem;
+        }
+
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .sidebar li {
+            margin-bottom: 12px;
+        }
+
+        .sidebar a {
+            text-decoration: none;
+            color: var(--dark);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 12px;
+            border-radius: 5px;
+            transition: var(--transition);
+        }
+
+        .sidebar a:hover, .sidebar a.active {
+            background: var(--light-gray);
+            color: var(--primary);
+        }
+
+        .sidebar a i {
+            color: var(--accent);
+        }
+
+        /* Tips and Alerts */
+        .tip {
+            background: #e3f2fd;
+            border-left: 4px solid var(--accent);
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 var(--border-radius) var(--border-radius) 0;
+        }
+
+        .tip h4 {
+            color: var(--primary);
+            margin: 0 0 10px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.1rem;
+        }
+
+        .warning {
+            background: #fff3cd;
+            border-left-color: var(--warning);
+        }
+
+        .warning h4 {
+            color: #ff9800;
+        }
+
+        .success {
+            background: #d4edda;
+            border-left-color: var(--success);
+        }
+
+        .success h4 {
+            color: var(--success);
+        }
+
+        .danger {
+            background: #f8d7da;
+            border-left-color: var(--danger);
+        }
+
+        .danger h4 {
+            color: var(--danger);
+        }
+
+        /* Highlight Box */
+        .highlight-box {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.05), rgba(139, 92, 246, 0.05));
+            border: 2px solid var(--primary);
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: var(--border-radius);
+        }
+
+        .highlight-box h4 {
+            color: var(--primary);
+            margin-top: 0;
+        }
+
+        /* Images */
+        .section img {
+            max-width: 100%;
+            height: auto;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            margin: 20px 0;
+        }
+
+        .image-caption {
+            text-align: center;
+            font-size: 0.9rem;
+            color: var(--gray);
+            margin-top: 10px;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            text-align: left;
+        }
+
+        .footer-section h3 {
+            color: var(--accent);
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+        }
+
+        .footer-section p, .footer-section a {
+            color: #adb5bd;
+            margin-bottom: 10px;
+            display: block;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-section a:hover {
+            color: white;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-links a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            transition: var(--transition);
+        }
+
+        .social-links a:hover {
+            background: var(--accent);
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: #adb5bd;
+        }
+
+        /* Back to Top Button */
+        .back-to-top {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: var(--primary);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            opacity: 0;
+            transition: var(--transition);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            z-index: 999;
+            font-size: 1.5rem;
+        }
+
+        .back-to-top.show {
+            opacity: 1;
+        }
+
+        .back-to-top:hover {
+            background: var(--accent);
+            transform: translateY(-3px);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .sidebar {
+                position: static;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .hero {
+                padding: 2rem 0;
+            }
+            
+            .hero h2 {
+                font-size: 2.2rem;
+            }
+            
+            .section {
+                padding: 20px;
+            }
+
+            .section h3 {
+                font-size: 1.5rem;
+            }
+
+            .section h4 {
+                font-size: 1.2rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .logo h1 {
+                font-size: 1.5rem;
+            }
+            
+            nav ul {
+                gap: 10px;
+            }
+            
+            nav a {
+                padding: 6px 10px;
+                font-size: 0.9rem;
+            }
+            
+            .hero h2 {
+                font-size: 1.8rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .back-to-top {
+                bottom: 1rem;
+                right: 1rem;
+                width: 45px;
+                height: 45px;
+            }
+        }
+
+        /* Animation */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section {
+            animation: fadeIn 0.6s ease forwards;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-content">
+            <div class="logo">
+                <i class="fas fa-robot"></i>
+                <h1>Claude <span>Code</span></h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#intro"><i class="fas fa-home"></i> Introduction</a></li>
+                    <li><a href="#requirements"><i class="fas fa-clipboard-check"></i> request</a></li>
+                    <li><a href="#setup"><i class="fas fa-cog"></i> Installation</a></li>
+                    <li><a href="#models"><i class="fas fa-layer-group"></i> model</a></li>
+                    <li><a href="#vscode"><i class="fas fa-code"></i> VSCode</a></li>
+                    <li><a href="#faq"><i class="fas fa-question-circle"></i> FAQ</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h2>Claude Code complete configuration tutorial</h2>
+            <p>Supports three major platforms: Windows/macOS/Linux, and quickly gets started with the AI programming assistant from scratch.</p>
+            <a href="#setup" class="cta-button">Start configuration <i class="fas fa-arrow-down"></i></a>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <div class="container main-content">
+        <main>
+            <!-- 介绍 -->
+            <section class="section" id="intro">
+                <h3><i class="fas fa-info-circle"></i> What is Claude Code?</h3>
+                <div class="section-content">
+                    <p><strong>Claude Code</strong> It is a command-line AI programming assistant officially released by Anthropic. It can complete various development tasks such as code generation, code review, bug repair, and document generation through natural language instructions. It supports direct operation of the terminal and understanding of the code base structure, making it suitable for all types of users from novices to professional developers.</p>
+                    
+                    <div class="highlight-box">
+                        <h4>✨ The core advantages of Claude Code</h4>
+                        <ul>
+                            <li><strong>natural language interaction</strong>: No need to learn complex commands, you can operate them in everyday language</li>
+                            <li><strong>Multi-language support</strong>: Supports mainstream programming languages such as Python, JavaScript, Java, Go, and Rust.</li>
+                            <li><strong>File system operations</strong>: Can directly read and write files and execute terminal commands</li>
+                            <li><strong>Intelligent context understanding</strong>: Automatically understand project structure and code relationships</li>
+                            <li><strong>Multiple model switching</strong>: Support Claude Sonnet 4, Qwen3-Coder, Kimi-K2 and other models</li>
+                            <li><strong>Domestic high-speed access</strong>: Provide stable domestic transfer service through Wukong API</li>
+                        </ul>
+                    </div>
+
+                    <div class="tip">
+                        <h4><i class="fas fa-lightbulb"></i> Applicable scenarios</h4>
+                        <ul>
+                            <li>Quickly generate code frameworks and functions</li>
+                            <li>Code review and optimization suggestions</li>
+                            <li>Bug debugging and bug fixing</li>
+                            <li>Write technical documentation and notes</li>
+							                            <li>Refactoring and code rewriting</li>
+                            <li>Learn new programming languages and frameworks</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 系统要求 -->
+            <section class="section" id="requirements">
+                <h3><i class="fas fa-clipboard-check"></i> System requirements</h3>
+                <div class="section-content">
+                    <p>To ensure that Claude Code can run stably, please ensure that your development environment meets the following basic requirements:</p>
+
+                    <h4>✅ Common core requirements (all platforms)</h4>
+                    <ul>
+                        <li><strong>Node.js</strong>: Version 18.0+ (LTS long-term support version recommended)</li>
+                        <li><strong>npm</strong>: Version 8.0+ (included with Node.js)</li>
+                        <li><strong>network connection</strong>: Stable internet connection to access Wukong API service</li>
+                        <li><strong>Wukong API account</strong>: need to be in <a href="https://wukong.support/" target="_blank">wukong.support</a> Register an account and get an API key</li>
+                    </ul>
+
+                    <h4>📋 Specific requirements for each platform</h4>
+
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Platform</th>
+                                <th>Minimum version</th>
+                                <th>Recommended configuration</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><span class="platform-icon">🪟</span> Windows</td>
+                                <td>Windows 10</td>
+                                <td>Windows 11 + PowerShell 7+</td>
+                            </tr>
+                            <tr>
+                                <td><span class="platform-icon">🍎</span> macOS</td>
+                                <td>macOS 10.15 (Catalina)</td>
+                                <td>macOS 12+ (Monterey)</td>
+                            </tr>
+                            <tr>
+                                <td><span class="platform-icon">🐧</span> Linux</td>
+                                <td>Ubuntu 18.04 / Debian 9</td>
+                                <td>Ubuntu 22.04 / Debian 11</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="tip">
+                        <h4><i class="fas fa-info-circle"></i> Tips</h4>
+                        <p>It is recommended to use the latest version of Node.js LTS for best performance and compatibility. You can start from <a href="https://nodejs.org" target="_blank">Node.js official website</a> Download the installation package.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Windows 安装教程 -->
+            <section class="section" id="setup">
+                <h3><i class="fas fa-download"></i> Claude Code installation and configuration</h3>
+                <div class="section-content">
+                    <h4><span class="platform-icon">🪟</span> Windows platform installation tutorial</h4>
+
+                    <ol class="steps">
+                        <li>
+                            <strong>Install Node.js</strong>
+                            <p><strong>Method 1: Official installation package (recommended)</strong></p>
+                            <ul>
+                                <li>visit <a href="https://nodejs.org" target="_blank">Node.js official website</a></li>
+                                <li>Download <strong>LTS (Long Term Support)</strong> version of Windows Installer (.msi file)</li>
+                                <li>Double-click the installation package and follow the wizard to complete the installation (just keep the default options)</li>
+                            </ul>
+
+                            <p><strong>Method 2: Use Winget package manager</strong></p>
+                            <pre><code># Run in PowerShell or CMD
+winget install OpenJS.NodeJS.LTS</code></pre>
+
+                            <p><strong>Verify installation</strong></p>
+                            <p>After the installation is complete, open a new command prompt (CMD) or PowerShell window and run the following command:</p>
+                            <pre><code>node --version
+npm --version</code></pre>
+                            <p>If the version number is displayed (such as v18.x.x and 8.x.x), the installation is successful.</p>
+                        </li>
+
+                        <li>
+                            <strong>Install Claude Code CLI</strong>
+                            <p>to<strong>Administrator status</strong>Run the command prompt or PowerShell and execute the following command:</p>
+                            <pre><code>npm install -g @anthropic-ai/claude-code</code></pre>
+                            
+                            <p>Verify after installation is complete:</p>
+                            <pre><code>claude --version</code></pre>
+                            
+                            <div class="tip warning">
+                                <h4><i class="fas fa-exclamation-triangle"></i> Permissions issue</h4>
+                                <p>If you encounter permission errors, make sure you run the command line as an administrator. Right-click "Command Prompt" or "PowerShell" and select "Run as administrator".</p>
+                            </div>
+                        </li>
+
+                        <li>
+                            <strong>Get Wukong API Key</strong>
+                            <ul>
+                                <li>visit <a href="https://wukong.support/console/token" target="_blank">Wukong API Console - Token Management</a></li>
+                                <li>Log in to your account (if you don’t have an account, please register first)</li>
+                                <li>Click <strong>Create new token</strong></li>
+                                <li>in<strong>Select group</strong>Select from the drop-down menu <strong>Claude Code dedicated group</strong></li>
+                                <li>Fill in the token name (for example: "Windows Claude Code")</li>
+                                <li>Click<strong>create</strong>button</li>
+                                <li>Copy the generated API key (format: sk-xxxxxxxxxx)</li>
+                            </ul>
+                            
+                            <div class="tip danger">
+                                <h4><i class="fas fa-lock"></i> Safety tips</h4>
+                                <p>The API key is only displayed once, please save it to a safe location now. Do not share the key with others or upload it to a public repository.</p>
+                            </div>
+                        </li>
+
+                        <li>
+                            <strong>Configure Claude Code</strong>
+                            <p>Create configuration file path:<code>%USERPROFILE%\.claude\settings.json</code></p>
+                            
+                            <p><strong>Use Notepad to create the configuration file:</strong></p>
+                            <pre><code># Run in PowerShell
+mkdir $env:USERPROFILE\.claude -Force
+notepad $env:USERPROFILE\.claude\settings.json</code></pre>
+
+                            <p>In the open notepad, paste the following configuration:</p>
+                            <pre><code>{
+  "env": {
+    "ANTHROPIC_AUTH_TOKEN": "Paste your API key here",
+    "ANTHROPIC_BASE_URL": "https://api.wukong.support"
+  }
+}</code></pre>
+
+                            <p>Close Notepad after saving the file.</p>
+
+                            <div class="tip warning">
+                                <h4><i class="fas fa-edit"></i> Important note</h4>
+                                <ul>
+                                    <li>will <code>ANTHROPIC_AUTH_TOKEN</code> Replace the value of with your actual API key</li>
+                                    <li>Make sure the JSON is well-formed, note the quotes and commas</li>
+                                    <li>Required when creating a token <strong>Claude Code dedicated group</strong></li>
+                                </ul>
+                            </div>
+                        </li>
+
+                        <li>
+                            <strong>Start and use</strong>
+                            <p>Open a command prompt or PowerShell and go into your project directory:</p>
+                            <pre><code>cd C:\path\to\your\project
+claude</code></pre>
+                            
+                            <p>When running for the first time, Claude Code will perform initial configuration. Just follow the prompts.</p>
+
+                            <div class="tip success">
+                                <h4><i class="fas fa-check-circle"></i> success sign</h4>
+                                <p>If you see the welcome interface and command prompt of Claude Code, the configuration is successful! You can now start using the AI ​​programming assistant.</p>
+                            </div>
+                        </li>
+                    </ol>
+
+                    <hr>
+
+                    <!-- macOS 安装教程 -->
+                    <h4><span class="platform-icon">🍎</span> macOS platform installation tutorial</h4>
+
+                    <ol class="steps">
+                        <li>
+                            <strong>Install Node.js</strong>
+                            <p><strong>Method 1: Use Homebrew (recommended)</strong></p>
+                            <pre><code># Install Homebrew first if needed
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+# Install Node.js
+brew install node</code></pre>
+
+                            <p><strong>Method 2: Official installation package</strong></p>
+                            <ul>
+                                <li>visit <a href="https://nodejs.org" target="_blank">Node.js official website</a></li>
+                                <li>Download the macOS installation package (.pkg file)</li>
+                                <li>Double-click the installation package and follow the wizard to complete the installation</li>
+                            </ul>
+
+                            <p><strong>Verify installation</strong></p>
+                            <pre><code>node --version
+npm --version</code></pre>
+                        </li>
+
+                        <li>
+                            <strong>Install Claude Code CLI</strong>
+                            <p>Open Terminal and execute:</p>
+                            <pre><code>npm install -g @anthropic-ai/claude-code</code></pre>
+                            
+                            <p>Verify installation:</p>
+                            <pre><code>claude --version</code></pre>
+                        </li>
+
+                        <li>
+                            <strong>Get Wukong API Key</strong>
+                            <ul>
+                                <li>visit <a href="https://wukong.support/console/token" target="_blank">Wukong API console</a></li>
+                                <li>Choose <strong>Claude Code dedicated group</strong></li>
+                                <li>Create token and copy API key</li>
+                            </ul>
+                        </li>
+
+                        <li>
+                            <strong>Configure Claude Code</strong>
+                            <p>Create configuration file:<code>~/.claude/settings.json</code></p>
+                            <pre><code># Create the directory and file
+mkdir -p ~/.claude
+nano ~/.claude/settings.json</code></pre>
+
+                            <p>Enter the following into the editor:</p>
+                            <pre><code>{
+  "env": {
+    "ANTHROPIC_AUTH_TOKEN": "Paste your API key here",
+    "ANTHROPIC_BASE_URL": "https://api.wukong.support"
+  }
+}</code></pre>
+
+                            <p>press <code>Ctrl + X</code>, then press <code>Y</code> To save, press <code>Enter</code> Exit.</p>
+                        </li>
+
+                        <li>
+                            <strong>Start and use</strong>
+                            <pre><code>cd ~/your-project
+claude</code></pre>
+                        </li>
+                    </ol>
+
+                    <hr>
+
+                    <!-- Linux 安装教程 -->
+                    <h4><span class="platform-icon">🐧</span> Linux platform installation tutorial</h4>
+
+                    <ol class="steps">
+                        <li>
+                            <strong>Install Node.js</strong>
+                            <p><strong>Ubuntu / Debian:</strong></p>
+                            <pre><code># Use NodeSource for the latest Node.js release
+curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash -
+sudo apt-get install -y nodejs
+
+# Verify the installation
+node --version
+npm --version</code></pre>
+
+                            <p><strong>CentOS / RHEL:</strong></p>
+                            <pre><code>curl -fsSL https://rpm.nodesource.com/setup_lts.x | sudo bash -
+sudo yum install -y nodejs</code></pre>
+
+                            <p><strong>Fedora:</strong></p>
+                            <pre><code>sudo dnf install nodejs</code></pre>
+                        </li>
+
+                        <li>
+                            <strong>Install Claude Code CLI</strong>
+                            <pre><code>sudo npm install -g @anthropic-ai/claude-code
+
+# Verify the installation
+claude --version</code></pre>
+                        </li>
+
+                        <li>
+                            <strong>Get Wukong API Key</strong>
+                            <ul>
+                                <li>visit <a href="https://wukong.support/console/token" target="_blank">Wukong API console</a></li>
+                                <li>Choose <strong>Claude Code dedicated group</strong></li>
+                                <li>Create token and copy key</li>
+                            </ul>
+                        </li>
+
+                        <li>
+                            <strong>Configure Claude Code</strong>
+                            <pre><code>mkdir -p ~/.claude
+nano ~/.claude/settings.json</code></pre>
+
+                            <p>Enter configuration content:</p>
+                            <pre><code>{
+  "env": {
+    "ANTHROPIC_AUTH_TOKEN": "Paste your API key here",
+    "ANTHROPIC_BASE_URL": "https://api.wukong.support"
+  }
+}</code></pre>
+
+                            <p>Save and exit the editor.</p>
+                        </li>
+
+                        <li>
+                            <strong>Start and use</strong>
+                            <pre><code>cd ~/your-project
+claude</code></pre>
+                        </li>
+                    </ol>
+                </div>
+            </section>
+
+            <!-- 支持的模型 -->
+            <section class="section" id="models">
+                <h3><i class="fas fa-layer-group"></i> Supported model list</h3>
+                <div class="section-content">
+                    <p>Wukong API provides dedicated token grouping for Claude Code, supporting the following latest AI models:</p>
+
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Model name</th>
+                                <th>Model type</th>
+                                <th>context length</th>
+                                <th>Applicable scenarios</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><code>claude-sonnet-4-20250514</code></td>
+                                <td>Claude Sonnet 4</td>
+                                <td>200K tokens</td>
+                                <td>Code generation, complex reasoning, long text processing</td>
+                            </tr>
+                            <tr>
+                                <td><code>claude-sonnet-4-5-20250929</code></td>
+                                <td>Claude Sonnet 4.5</td>
+                                <td>200K tokens</td>
+                                <td>The latest version with better performance</td>
+                            </tr>
+                            <tr>
+                                <td><code>claude-haiku-4-5-20251001</code></td>
+                                <td>Claude Haiku 4.5</td>
+                                <td>200K tokens</td>
+                                <td>Fast response, lightweight tasks</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <h4>Model switching method</h4>
+
+                    <p><strong>Method 1: Specify the default model in the configuration file</strong></p>
+                    <p>Edit <code>~/.claude/settings.json</code>（Windows: <code>%USERPROFILE%\.claude\settings.json</code>）：</p>
+                    <pre><code>{
+  "env": {
+    "ANTHROPIC_AUTH_TOKEN": "YOUR_API_KEY",
+    "ANTHROPIC_BASE_URL": "https://api.wukong.support",
+    "ANTHROPIC_MODEL": "claude-haiku-4-5-20251001"
+  }
+}</code></pre>
+
+                    <p><strong>Method 2: Specify the model at startup</strong></p>
+                    <pre><code>claude --model claude-haiku-4-5-20251001</code></pre>
+
+                    <p><strong>Method 3: Dynamically switch during the conversation</strong></p>
+                    <pre><code>/model claude-haiku-4-5-20251001</code></pre>
+
+                    <div class="highlight-box">
+                        <h4>🎯 Model selection suggestions</h4>
+                        <ul>
+                            <li><strong>Daily code generation</strong>: Recommended <code>claude-haiku-4-5-20251001</code> (high cost performance)</li>
+                            <li><strong>Complex architecture design</strong>: Recommended <code>claude-sonnet-4-20250514	</code>(Comprehensive optimal)</li>
+                            <li><strong>Quick Q&A</strong>: Recommended <code>claude-haiku-4-5-20251001</code>(fast response)</li>
+                            <li><strong>Large project refactoring</strong>: Recommended <code>claude-sonnet-4-5-20250929</code>(The strongest ability)</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- VSCode 插件配置 -->
+            <section class="section" id="vscode">
+                <h3><i class="fas fa-code"></i> VSCode plug-in configuration tutorial</h3>
+                <div class="section-content">
+                    <p>If you want to use the Claude Code plug-in in Visual Studio Code, you can refer to the following detailed configuration steps.</p>
+
+                   
+
+                    <h4>Step 1: Configure environment variables in VS Code</h4>
+
+                    <div style="margin: 2rem 0;">
+                        <div style="display: flex; align-items: flex-start; margin-bottom: 2rem; gap: 2rem;">
+                            <div style="flex-shrink: 0;">
+                                <div style="
+                                    background: var(--primary);
+                                    color: white;
+                                    width: 2.5rem;
+                                    height: 2.5rem;
+                                    border-radius: 50%;
+                                    display: flex;
+                                    align-items: center;
+                                    justify-content: center;
+                                    font-weight: 600;
+                                    font-size: 1rem;
+                                ">1</div>
+                            </div>
+                            <div style="flex: 1;">
+                                <h5>Install and enable the Claude Code plugin</h5>
+                                <ul>
+                                    <li>Open VSCode <strong>Extension store</strong>(sidebar icon or press <code>Ctrl+Shift+X</code>）</li>
+                                    <li>Enter in the search box <strong>Claude Code</strong></li>
+                                    <li>After finding the official plug-in, click <strong>Installation</strong> button</li>
+                                    <li>After installation is complete, the plug-in will be automatically enabled</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div style="display: flex; align-items: flex-start; margin-bottom: 2rem; gap: 2rem;">
+                            <div style="flex-shrink: 0;">
+                                <div style="
+                                    background: var(--primary);
+                                    color: white;
+                                    width: 2.5rem;
+                                    height: 2.5rem;
+                                    border-radius: 50%;
+                                    display: flex;
+                                    align-items: center;
+                                    justify-content: center;
+                                    font-weight: 600;
+                                    font-size: 1rem;
+                                ">2</div>
+                            </div>
+                            <div style="flex: 1;">
+                                <h5>Open the VSCode settings JSON file</h5>
+                                <ul>
+                                    <li>Press shortcut key <code>Ctrl+Shift+P</code>(Windows/Linux) or <code>Cmd+Shift+P</code>（macOS）</li>
+                                    <li>Enter in the command panel <code>Preferences: Open Settings (JSON)</code></li>
+                                    <li>Select this option to open <code>settings.json</code> File</li>
+                                </ul>
+                                <div style="margin: 1.5rem 0; text-align: center;">
+                                    <img src="/docs/static/images/vscode-claude001.jpg" alt="VS Code JSON configuration page" style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                                    <p class="image-caption">VS Code sets the JSON file opening method</p>
+									<img src="/docs/static/images/vscode-claude002.jpg" alt="VS Code JSON configuration page" style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div style="display: flex; align-items: flex-start; gap: 2rem;">
+                            <div style="flex-shrink: 0;">
+                                <div style="
+                                    background: var(--primary);
+                                    color: white;
+                                    width: 2.5rem;
+                                    height: 2.5rem;
+                                    border-radius: 50%;
+                                    display: flex;
+                                    align-items: center;
+                                    justify-content: center;
+                                    font-weight: 600;
+                                    font-size: 1rem;
+                                ">3</div>
+                            </div>
+                            <div style="flex: 1;">
+                                <h5>Add API environment variable configuration</h5>
+                                <p>in <code>settings.json</code> Add the following configuration to the file (replace with your actual key):</p>
+                                <pre><code>{
+  "claudeCode.environmentVariables": [
+    {
+      "name": "ANTHROPIC_AUTH_TOKEN",
+      "value": "your-api-key"
+    },
+    {
+      "name": "ANTHROPIC_BASE_URL",
+      "value": "https://api.wukong.support"
+    }
+  ]
+}</code></pre>
+                                <div style="margin: 1.5rem 0; text-align: center;">
+                                    <img src="/docs/static/images/vscode-claude003.jpg" alt="Environment variable configuration example" style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                                    <p class="image-caption">Environment variable configuration example diagram</p>
+									<img src="/docs/static/images/vscode-claude004.jpg" alt="Configuration successful test" style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="highlight-box">
+                        <h4>🔑 Configuration parameter description</h4>
+                        <ul>
+                            <li><strong>ANTHROPIC_AUTH_TOKEN</strong>: The API access token (SK key) you obtained from the Wukong API console</li>
+                            <li><strong>ANTHROPIC_BASE_URL</strong>: The request address of Wukong API, fixed to <code>https://api.wukong.support</code></li>
+                        </ul>
+                        <p><strong>Note</strong>: When creating your API token, make sure you select <strong>Claude Code dedicated group</strong>, to ensure the best compatibility.</p>
+                    </div>
+
+                    <hr>
+
+                    <h4>Step 3: Restart VSCode and start using it</h4>
+                    <ol>
+                        <li>Completely close VSCode and reopen it</li>
+                        <li>Open any project folder</li>
+                        <li>Click the Claude Code icon in the sidebar, or use the shortcut key to activate</li>
+                        <li>Start a conversation with the AI assistant for code generation, review, and more</li>
+                    </ol>
+
+                    <div class="tip warning">
+                        <h4><i class="fas fa-exclamation-triangle"></i> Common configuration issues</h4>
+                        <ul>
+                            <li><strong>Plugin cannot connect</strong>: Check whether the API key is correct and make sure there are no extra spaces</li>
+                            <li><strong>Configuration does not take effect</strong>: Make sure VSCode has been restarted and the configuration file path is correct</li>
+                            <li><strong>API address error</strong>：<code>ANTHROPIC_BASE_URL</code> Don't add <code>/v1</code> suffix</li>
+                            <li><strong>Permissions issue</strong>: Windows users ensure <code>.claude</code> The directory has read and write permissions</li>
+                        </ul>
+                    </div>
+
+                    <div class="tip success">
+                        <h4><i class="fas fa-check-circle"></i> Configuration success flag</h4>
+                        <p>If configured correctly, you will see the welcome interface of the Claude Code plug-in in VSCode, and can send messages and receive AI responses normally. You can try simple commands like "Generate a Python Hello World program" to test functionality.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 基础使用示例 -->
+            <section class="section" id="usage">
+                <h3><i class="fas fa-laptop-code"></i> Basic usage examples</h3>
+                <div class="section-content">
+                    <h4>Common commands</h4>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>command</th>
+                                <th>Function</th>
+                                <th>Example</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><code>/help</code></td>
+                                <td>View the help menu and all available commands</td>
+                                <td><code>/help</code></td>
+                            </tr>
+                            <tr>
+                                <td><code>/clear</code></td>
+                                <td>Clear current conversation history</td>
+                                <td><code>/clear</code></td>
+                            </tr>
+                            <tr>
+                                <td><code>/model</code></td>
+                                <td>Switch AI model</td>
+                                <td><code>/model claude-haiku-4-5-20251001</code></td>
+                            </tr>
+                            <tr>
+                                <td><code>/permissions</code></td>
+                                <td>Manage file operation permissions</td>
+                                <td><code>/permissions</code></td>
+                            </tr>
+                            <tr>
+                                <td><code>/exit</code></td>
+                                <td>Exit Claude Code</td>
+                                <td><code>/exit</code></td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <h4>Code generation example</h4>
+                    <p><strong>Example 1: Generating an annotated function</strong></p>
+                    <p>Enter the command:</p>
+                    <pre><code>Generate a Python function that implements quicksort, with detailed comments and type hints.</code></pre>
+
+                    <p>AI output example:</p>
+                    <pre><code>def quick_sort(arr: list[int]) -&gt; list[int]:
+    """
+    Quicksort implementation
+    
+    Args:
+        arr: The list of integers to sort
+    
+    Returns:
+        The sorted list
+    
+    Time complexity: O(n log n) on average
+    Space complexity: O(log n) recursive stack space
+    """
+    if len(arr) &lt;= 1:
+        return arr
+    
+    # Pick a pivot value (use the middle element here)
+    pivot = arr[len(arr) // 2]
+    
+    # Partition into values less than, equal to, and greater than the pivot
+    left = [x for x in arr if x &lt; pivot]
+    middle = [x for x in arr if x == pivot]
+    right = [x for x in arr if x &gt; pivot]
+    
+    # Recursively sort and combine
+    return quick_sort(left) + middle + quick_sort(right)
+
+# Test
+if __name__ == "__main__":
+    test_arr = [64, 34, 25, 12, 22, 11, 90]
+    sorted_arr = quick_sort(test_arr)
+    print(f"Original array: {test_arr}")
+    print(f"Sorted array: {sorted_arr}")</code></pre>
+
+                    <hr>
+
+                    <p><strong>Example 2: Code refactoring</strong></p>
+                    <p>Enter the command:</p>
+                    <pre><code>Refactor the following code to better follow PEP 8 and improve readability:
+
+def calc(a,b,op):
+    if op=='+':
+        return a+b
+    elif op=='-':
+        return a-b
+    elif op=='*':
+        return a*b
+    elif op=='/':
+        return a/b</code></pre>
+
+                    <p>AI output example:</p>
+                    <pre><code>from typing import Union
+
+def calculate(
+    operand_a: Union[int, float], 
+    operand_b: Union[int, float], 
+    operator: str
+) -&gt; Union[int, float]:
+    """
+    Perform a basic arithmetic operation
+    
+    Args:
+        operand_a: The first operand
+        operand_b: The second operand
+        operator: The operator ('+', '-', '*', '/')
+    
+    Returns:
+        The calculation result
+    
+    Raises:
+        ValueError: If the operator is invalid
+        ZeroDivisionError: If the divisor is 0
+    """
+    operations = {
+        '+': lambda a, b: a + b,
+        '-': lambda a, b: a - b,
+        '*': lambda a, b: a * b,
+        '/': lambda a, b: a / b,
+    }
+    
+    if operator not in operations:
+        raise ValueError(f"Unsupported operator: {operator}")
+    
+    if operator == '/' and operand_b == 0:
+        raise ZeroDivisionError("Divisor cannot be zero")
+    
+    return operations[operator](operand_a, operand_b)
+
+# Usage example
+try:
+    result = calculate(10, 5, '+')
+    print(f"Result: {result}")
+except (ValueError, ZeroDivisionError) as e:
+    print(f"Error: {e}")</code></pre>
+
+                    <hr>
+
+                    <p><strong>Example 3: Generate unit tests</strong></p>
+                    <p>Enter the command:</p>
+                    <pre><code>Generate a complete pytest test suite for the calculate function above.</code></pre>
+
+                    <p>AI output example:</p>
+                    <pre><code>import pytest
+from your_module import calculate
+
+class TestCalculate:
+    """Unit tests for the calculate function"""
+    
+    def test_addition(self):
+        """Test addition"""
+        assert calculate(10, 5, '+') == 15
+        assert calculate(-3, 7, '+') == 4
+        assert calculate(0, 0, '+') == 0
+    
+    def test_subtraction(self):
+        """Test subtraction"""
+        assert calculate(10, 5, '-') == 5
+        assert calculate(5, 10, '-') == -5
+        assert calculate(0, 5, '-') == -5
+    
+    def test_multiplication(self):
+        """Test multiplication"""
+        assert calculate(10, 5, '*') == 50
+        assert calculate(-3, 4, '*') == -12
+        assert calculate(0, 100, '*') == 0
+    
+    def test_division(self):
+        """Test division"""
+        assert calculate(10, 5, '/') == 2.0
+        assert calculate(7, 2, '/') == 3.5
+        assert calculate(0, 5, '/') == 0.0
+    
+    def test_division_by_zero(self):
+        """Test division by zero handling"""
+        with pytest.raises(ZeroDivisionError, match="Divisor cannot be zero"):
+            calculate(10, 0, '/')
+    
+    def test_invalid_operator(self):
+        """Test invalid operator handling"""
+        with pytest.raises(ValueError, match="Unsupported operator"):
+            calculate(10, 5, '%')
+        
+        with pytest.raises(ValueError, match="Unsupported operator"):
+            calculate(10, 5, 'invalid')
+    
+    def test_float_operations(self):
+        """Test floating-point operations"""
+        assert calculate(10.5, 2.5, '+') == 13.0
+        assert calculate(10.5, 2.5, '*') == 26.25</code></pre>
+                </div>
+            </section>
+
+            <!-- FAQ 常见问题 -->
+            <section class="section" id="faq">
+                <h3><i class="fas fa-question-circle"></i> FAQ</h3>
+                <div class="section-content">
+                    <h4>Q1: Why do you need to choose the Claude Code dedicated group?</h4>
+                    <p><strong>A:</strong> Different tools (Claude Code, CodeX, Gemini CLI) have different API calling methods and parameter requirements. The Wukong API provides specially optimized groupings for each tool, ensuring optimal compatibility and performance. Using the wrong grouping can result in:</p>
+                    <ul>
+                        <li>API call fails or returns error</li>
+                        <li>Model response format is incompatible</li>
+                        <li>Limited functionality or abnormal behavior</li>
+                        <li>Billing exception</li>
+                    </ul>
+                    <p>Therefore, when creating an API token, be sure to select the dedicated group for the corresponding tool.</p>
+
+                    <hr>
+
+                    <h4>Q2: What should I do if "command not found" is prompted during installation?</h4>
+                    <p><strong>A:</strong> This is usually because Node.js or npm is not installed correctly, or the environment variables are not configured. Please follow the following steps to troubleshoot:</p>
+                    <ol>
+                        <li><strong>Verify Node.js installation</strong>：
+                            <pre><code>node --version
+npm --version</code></pre>
+                            If the version number is displayed, it means it has been installed.
+                        </li>
+                        <li><strong>Reinstall Node.js</strong>: If it is not installed or the version is too low, please visit <a href="https://nodejs.org" target="_blank">nodejs.org</a> Download the latest LTS version.</li>
+                        <li><strong>Check environment variables</strong>（Windows）：
+                            <ul>
+                                <li>Right-click "This PC" → "Properties" → "Advanced System Settings" → "Environment Variables"</li>
+                                <li>Confirm <code>PATH</code> Contains the Node.js installation path (such as <code>C:\Program Files\nodejs\</code>）</li>
+                            </ul>
+                        </li>
+                        <li><strong>Restart the terminal</strong>: After modifying the environment variables, you need to reopen the command line window.</li>
+                    </ol>
+
+                    <hr>
+
+                    <h4>Q3: After configuration, I cannot connect to the API and it is prompted that the authentication failed?</h4>
+                    <p><strong>A:</strong> Please check the following points:</p>
+                    <ul>
+                        <li><strong>API key correctness</strong>：
+                            <ul>
+                                <li>Confirm the key with <code>sk-</code> Beginning</li>
+                                <li>Check whether the copy is complete (no omissions, no extra spaces)</li>
+                                <li>Try regenerating a new key</li>
+                            </ul>
+                        </li>
+                        <li><strong>Group selection</strong>: Must be selected when creating a token <strong>Claude Code dedicated group</strong></li>
+                        <li><strong>Configuration file format</strong>：
+                            <ul>
+                                <li>JSON must be well-formed (quotes, commas, brackets)</li>
+                                <li>File encoding is UTF-8</li>
+                                <li>The file path is correct (<code>~/.claude/settings.json</code>）</li>
+                            </ul>
+                        </li>
+                        <li><strong>network connection</strong>: Make sure it is accessible <code>api.wukong.support</code></li>
+                    </ul>
+
+                    <hr>
+
+                    <h4>Q4: What should I do if there is a prompt about insufficient permissions under Windows?</h4>
+                    <p><strong>A:</strong> Installing npm packages globally requires administrator privileges. Solution:</p>
+                    <ul>
+                        <li><strong>Method one</strong>: Right-click "Command Prompt" or "PowerShell" and select "Run as administrator"</li>
+                        <li><strong>Method two</strong>: Configure npm to use a user directory (no admin rights required):
+                            <pre><code># Configure the npm global install path
+npm config set prefix "%USERPROFILE%\npm-global"
+
+# Add it to the PATH environment variable
+# Add %USERPROFILE%\npm-global to your system PATH</code></pre>
+                        </li>
+                    </ul>
+
+                    <hr>
+
+                    <h4>Q5: How to check API usage and balance?</h4>
+                    <p><strong>A:</strong> Login <a href="https://wukong.support/console" target="_blank">Wukong API console</a>, which can be viewed in the dashboard:</p>
+                    <ul>
+                        <li>Current account balance</li>
+                        <li>API call statistics (number of times, tokens consumption)</li>
+                        <li>Fee breakdown and billing</li>
+                        <li>Each model uses distribution</li>
+                    </ul>
+
+                    <hr>
+					                    <h4>Q6: What programming languages are supported?</h4>
+                    <p><strong>A:</strong> Claude Code supports almost all major programming languages, including but not limited to:</p>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin: 15px 0;">
+                        <ul style="margin: 0;">
+                            <li>Python</li>
+                            <li>JavaScript / TypeScript</li>
+                            <li>Java</li>
+                            <li>C / C++</li>
+                        </ul>
+                        <ul style="margin: 0;">
+                            <li>Go</li>
+                            <li>Rust</li>
+                            <li>PHP</li>
+                            <li>Ruby</li>
+                        </ul>
+                        <ul style="margin: 0;">
+                            <li>Swift</li>
+                            <li>Kotlin</li>
+                            <li>C#</li>
+                            <li>Shell Script</li>
+                        </ul>
+                    </div>
+
+                    <hr>
+
+                    <h4>Q7: Will Claude Code modify my files? Need authorization?</h4>
+                    <p><strong>A:</strong> Yes, Claude Code has file manipulation permissions, but requires your explicit authorization:</p>
+                    <ul>
+                        <li><strong>first operation</strong>: Will ask if reading/writing of the file is allowed</li>
+                        <li><strong>Permission management</strong>:can pass <code>/permissions</code> Commands to view and manage permissions</li>
+                        <li><strong>Security advice</strong>：
+                            <ul>
+                                <li>Get familiar with it in a test project before using it in an important project</li>
+                                <li>Protect code using version control (Git) for easy rollback</li>
+                                <li>Be vigilant about sensitive operations and scrutinize AI-recommended modifications</li>
+                            </ul>
+                        </li>
+                    </ul>
+
+                    <hr>
+
+                    <h4>Q8: Can it be used in company projects? Will the code be leaked?</h4>
+                    <p><strong>A:</strong> About data security and privacy:</p>
+                    <div class="highlight-box">
+                        <h4>🔒 Privacy Protection Instructions</h4>
+                        <ul>
+                            <li><strong>Wukong API</strong>: As a transit service, your code content will not be stored or logged</li>
+                            <li><strong>Anthropic Official Policy</strong>: The data called by the API is not used for model training.</li>
+                            <li><strong>best practices</strong>：
+                                <ul>
+                                    <li>Avoid hardcoding sensitive information (keys, passwords, etc.) in your code</li>
+                                    <li>Do not share complete code bases containing trade secrets</li>
+                                    <li>Consulting firm IT department confirms policy on use of AI tools</li>
+                                    <li>Consider using the Enterprise plan (if a higher level of security is required)</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <hr>
+
+                    <h4>Q9: What should I do if I encounter the error message "rate limit exceeded"?</h4>
+                    <p><strong>A:</strong> This indicates that the API call frequency limit has been reached. Solution:</p>
+                    <ul>
+                        <li><strong>wait a moment</strong>: Usually recovers automatically after 1-2 minutes</li>
+                        <li><strong>Check balance</strong>: Confirm that the account has sufficient balance</li>
+                        <li><strong>Optimized use</strong>：
+                            <ul>
+                                <li>Reduce unnecessary consecutive requests</li>
+                                <li>Use <code>/clear</code> Clear long conversation history</li>
+                                <li>Choose a more economical model (like Haiku instead of Sonnet)</li>
+                            </ul>
+                        </li>
+                        <li><strong>Upgrade plan</strong>: Contact customer service to learn about higher frequency limit solutions</li>
+                    </ul>
+
+                    <hr>
+
+                    <h4>Q10: How to uninstall Claude Code?</h4>
+                    <p><strong>A:</strong> Complete uninstall steps:</p>
+                    <pre><code># 1. Uninstall the global package
+npm uninstall -g @anthropic-ai/claude-code
+
+# 2. Remove the configuration files
+# Windows:
+rmdir /s /q %USERPROFILE%\.claude
+
+# macOS/Linux:
+rm -rf ~/.claude
+
+# 3. Verify the uninstall
+claude --version  # It should report "command not found"</code></pre>
+
+                    <div class="tip">
+                        <h4><i class="fas fa-info-circle"></i> VSCode plug-in uninstallation</h4>
+                        <p>If the VSCode plug-in is installed, find Claude Code in the extension panel and click the uninstall button.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 实用技巧 -->
+            <section class="section" id="tips">
+                <h3><i class="fas fa-lightbulb"></i> Practical Tips and Best Practices</h3>
+                <div class="section-content">
+                    <div class="tip">
+                        <h4><i class="fas fa-rocket"></i> Tips for improving efficiency</h4>
+                        <ul>
+                            <li><strong>clear instructions</strong>: The more specific the requirements, the higher the quality of the AI output.
+                                <pre><code>❌ Poor: "Write a sorting function"
+✅ Better: "Write a merge sort function in Python with type hints and docstrings"</code></pre>
+                            </li>
+                            <li><strong>Step by step operation</strong>: Split complex tasks into multiple small steps
+                                <pre><code>1. Ask the AI to design the overall architecture first
+2. Implement each module one by one
+3. Generate test code at the end</code></pre>
+                            </li>
+                            <li><strong>Leverage context</strong>: Claude Code will remember the conversation history and can refer to previous content
+                                <pre><code>"Based on the function above, now write a performance-optimized version."</code></pre>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="tip success">
+                        <h4><i class="fas fa-code"></i> Code quality improvement</h4>
+                        <ul>
+                            <li><strong>Ask for best practices</strong>：
+                                <pre><code>"Write a REST API client in Python that follows PEP 8 and includes error handling and retry logic."</code></pre>
+                            </li>
+                            <li><strong>code review</strong>：
+                                <pre><code>"Review the following code and point out potential bugs, performance issues, and improvement suggestions:
+[paste your code here]"</code></pre>
+                            </li>
+                            <li><strong>Add test</strong>：
+                                <pre><code>"Generate a complete pytest suite for the class above, with test coverage above 90%."</code></pre>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="tip warning">
+                        <h4><i class="fas fa-shield-alt"></i> Safety precautions</h4>
+                        <ul>
+                            <li><strong>Sensitive information handling</strong>：
+                                <ul>
+                                    <li>Don’t hardcode API keys, database passwords in your code</li>
+                                    <li>Use environment variables or configuration files to manage sensitive information</li>
+                                    <li>Review AI-generated code to ensure there are no security vulnerabilities</li>
+                                </ul>
+                            </li>
+                            <li><strong>version control</strong>：
+                                <ul>
+                                    <li>Always use a version control system like Git</li>
+                                    <li>Commit the current version before letting AI modify the code</li>
+                                    <li>Facilitates quick rollback when errors occur</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="highlight-box">
+                        <h4>💡 Advanced usage skills</h4>
+                        <ul>
+                            <li><strong>Model selection strategy</strong>：
+                                <ul>
+                                    <li>Quick Q&A: Using <code>claude-haiku-4-5-20251001</code></li>
+                                    <li>Complex architecture design: using <code>claude-sonnet-4-5-20250929</code></li>
+                                    <li>Bulk code generation: use <code>claude-sonnet-4-20250514</code></li>
+                       
+                                </ul>
+                            </li>
+                            <li><strong>Batch operations</strong>：
+                                <pre><code>"Traverse all .py files under src/ and add docstrings to every function."</code></pre>
+                            </li>
+                            <li><strong>learn new technologies</strong>：
+                                <pre><code>"I want to learn FastAPI. Help me build a TODO API from scratch and explain each concept step by step."</code></pre>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="tip">
+                        <h4><i class="fas fa-keyboard"></i> Quick operation</h4>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Operation</th>
+                                    <th>shortcut</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Copy code block</td>
+                                    <td>Select in terminal → <code>Ctrl+Shift+C</code> (Windows/Linux) / <code>Cmd+C</code> (macOS)</td>
+                                </tr>
+                                <tr>
+                                    <td>Paste into terminal</td>
+                                    <td><code>Ctrl+Shift+V</code> (Windows/Linux) / <code>Cmd+V</code> (macOS)</td>
+                                </tr>
+                                <tr>
+                                    <td>Interrupt AI response</td>
+                                    <td><code>Ctrl+C</code></td>
+                                </tr>
+                                <tr>
+                                    <td>clear screen</td>
+                                    <td><code>clear</code> (macOS/Linux) / <code>cls</code> (Windows)</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 获取支持 -->
+            <section class="section" id="support">
+                <h3><i class="fas fa-headset"></i> Get support</h3>
+                <div class="section-content">
+                    <p>If you encounter any problems while using Claude Code, you can get help in the following ways:</p>
+
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin: 2rem 0;">
+                        <div class="tip" style="margin: 0;">
+                            <h4><i class="fas fa-phone"></i> Customer service support</h4>
+                            <p>QQ customer service: 515199667</p>
+                            <p>Telegram: @wukongapi</p>
+                        </div>
+
+                        <div class="tip" style="margin: 0;">
+                            <h4><i class="fas fa-envelope"></i> Email support</h4>
+                            <p>wukongapi@gmail.com</p>
+                            <p>Weekdays 9:00-22:00 online response</p>
+                        </div>
+                    </div>
+
+                    <div class="highlight-box" style="margin-top: 2rem;">
+                        <h4>📚 More resources</h4>
+                        <ul>
+                            <li><strong>Official website</strong>: <a href="https://wukong.support" target="_blank">https://wukong.support</a></li>
+                            <li><strong>API documentation</strong>: <a href="/docs/" target="_blank">/docs/</a></li>
+                            <li><strong>price list</strong>: <a href="https://wukong.support/modellist/" target="_blank">https://wukong.support/modellist/</a></li>
+                            <li><strong>console</strong>: <a href="https://wukong.support/console" target="_blank">https://wukong.support/console</a></li>
+                            <li><strong>Complete configuration tutorial</strong>: <a href="https://wukong.support/docs/aicoding.en.html" target="_blank">AI Programming Tool Configuration Guide</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="tip success" style="margin-top: 2rem;">
+                        <h4><i class="fas fa-question-circle"></i> Please provide when submitting your question</h4>
+                        <ul>
+                            <li>Your operating system and version (Windows 10/11, macOS version, Linux distribution)</li>
+                            <li>Node.js and npm versions (<code>node --version</code> and <code>npm --version</code>）</li>
+                            <li>Claude Code version (<code>claude --version</code>）</li>
+                            <li>Screenshot or text of full error message</li>
+                            <li>The command you executed and the contents of the configuration file (note the hidden API key)</li>
+                        </ul>
+                        <p>Providing detailed information can help us locate and solve the problem more quickly!</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <h3><i class="fas fa-bookmark"></i> Quick navigation</h3>
+            <ul>
+                <li><a href="#intro"><i class="fas fa-info-circle"></i> What is Claude Code</a></li>
+                <li><a href="#requirements"><i class="fas fa-clipboard-check"></i> System requirements</a></li>
+                <li><a href="#setup"><i class="fas fa-download"></i> Installation configuration</a></li>
+                <li><a href="#models"><i class="fas fa-layer-group"></i> Supported models</a></li>
+                <li><a href="#vscode"><i class="fas fa-code"></i> VSCode configuration</a></li>
+                <li><a href="#usage"><i class="fas fa-laptop-code"></i> Usage example</a></li>
+                <li><a href="#faq"><i class="fas fa-question-circle"></i> FAQ</a></li>
+                <li><a href="#tips"><i class="fas fa-lightbulb"></i> Practical Tips</a></li>
+                <li><a href="#support"><i class="fas fa-headset"></i> Get support</a></li>
+            </ul>
+
+            <div style="margin-top: 2rem; padding: 1rem; background: linear-gradient(135deg, rgba(67, 97, 238, 0.1), rgba(76, 201, 240, 0.1)); border-radius: 8px;">
+                <h4 style="color: var(--primary); margin-bottom: 0.5rem; font-size: 1rem;">💡 Quick Tips</h4>
+                <p style="font-size: 0.9rem; color: var(--gray); margin: 0;">When creating an API token, be sure to select <strong>Claude Code dedicated group</strong> to ensure optimal compatibility!</p>
+            </div>
+
+            <div style="margin-top: 1.5rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border: 1px solid var(--light-gray);">
+                <h4 style="color: var(--success); margin-bottom: 0.5rem; font-size: 1rem;">🚀 Recommended models</h4>
+                <ul style="font-size: 0.85rem; padding-left: 1.2rem; margin: 0.5rem 0;">
+                    <li style="margin-bottom: 0.3rem;">Daily use: <code>claude-sonnet-4</code></li>
+                    <li style="margin-bottom: 0.3rem;">Complex tasks: <code>claude-sonnet-4-5</code></li>
+                    <li style="margin-bottom: 0.3rem;">Quick response: <code>claude-haiku-4-5</code></li>
+                </ul>
+            </div>
+        </aside>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3><i class="fas fa-robot"></i> Claude Code</h3>
+                    <p>A powerful AI programming assistant based on Anthropic Claude, with high-speed and stable access in the country through Wukong API.</p>
+                    <p style="margin-top: 1rem; font-size: 0.9rem;">Supports multiple programming languages and frameworks to improve development efficiency and make AI your programming partner.</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Quick links</h3>
+                    <a href="#intro">Function introduction</a>
+                    <a href="#setup">Installation configuration</a>
+                    <a href="#models">Model list</a>
+                    <a href="#vscode">VSCode configuration</a>
+                    <a href="#faq">FAQ</a>
+                    <a href="#support">Get support</a>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Wukong API</h3>
+                    <a href="https://wukong.support" target="_blank"><i class="fas fa-home"></i> Official website</a>
+                    <a href="/docs/" target="_blank"><i class="fas fa-book"></i> API documentation</a>
+                    <a href="https://wukong.support/modellist/" target="_blank"><i class="fas fa-tags"></i> price list</a>
+                    <a href="https://wukong.support/console" target="_blank"><i class="fas fa-tachometer-alt"></i> console</a>
+                    <a href="https://wukong.support/docs/aicoding.en.html" target="_blank"><i class="fas fa-cog"></i> Configuration Guide</a>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Supported tools</h3>
+                    <a href="#"><i class="fas fa-robot"></i> Claude Code</a>
+                    <a href="https://wukong.support/docs/aicoding.en.html#codex" target="_blank"><i class="fas fa-code"></i> CodeX</a>
+                    <a href="https://wukong.support/docs/aicoding.en.html#gemini" target="_blank"><i class="fas fa-gem"></i> Gemini CLI</a>
+                    <a href="https://wukong.support/docs/aicoding.en.html#vscode" target="_blank"><i class="fas fa-code-branch"></i> VSCode plug-in</a>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>© 2025 Wukong API. All rights reserved.</p>
+                <p style="margin-top: 0.5rem;">Provide developers with stable and efficient AI model transfer services | Global nodes · Low latency · High availability · Professional support</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <div class="back-to-top" id="backToTop">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        // ========================================
+        // 返回顶部功能
+        // ========================================
+        const backToTopBtn = document.getElementById('backToTop');
+        
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                backToTopBtn.classList.add('show');
+            } else {
+                backToTopBtn.classList.remove('show');
+            }
+        });
+
+        backToTopBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // ========================================
+        // 侧边栏导航高亮
+        // ========================================
+        const sections = document.querySelectorAll('section[id]');
+        const navLinks = document.querySelectorAll('.sidebar a[href^="#"]');
+
+        function highlightNavigation() {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (window.pageYOffset >= sectionTop - 200) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === '#' + current) {
+                    link.classList.add('active');
+                }
+            });
+        }
+
+        window.addEventListener('scroll', highlightNavigation);
+
+        // ========================================
+        // 平滑滚动
+        // ========================================
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                const href = this.getAttribute('href');
+                if (href === '#') return;
+                
+                e.preventDefault();
+                const targetId = href.substring(1);
+                const targetSection = document.getElementById(targetId);
+                
+                if (targetSection) {
+                    const headerOffset = 100;
+                    const elementPosition = targetSection.getBoundingClientRect().top;
+                    const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+                    window.scrollTo({
+                        top: offsetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // ========================================
+        // 代码复制功能
+        // ========================================
+        document.querySelectorAll('pre').forEach(pre => {
+            // 保存原始代码
+            const codeElement = pre.querySelector('code');
+            const originalCode = codeElement ? codeElement.textContent : pre.textContent;
+            
+            // 创建复制按钮
+            const copyBtn = document.createElement('button');
+            copyBtn.className = 'copy-btn';
+            copyBtn.innerHTML = '<i class="fas fa-copy"></i> Copy';
+            
+            copyBtn.addEventListener('click', () => {
+                navigator.clipboard.writeText(originalCode).then(() => {
+                    copyBtn.innerHTML = '<i class="fas fa-check"></i> Copied!';
+                    copyBtn.style.background = 'var(--success)';
+                    
+                    setTimeout(() => {
+                        copyBtn.innerHTML = '<i class="fas fa-copy"></i> Copy';
+                        copyBtn.style.background = 'var(--accent)';
+                    }, 2000);
+                }).catch(err => {
+                    console.error('Copy failed:', err);
+                    copyBtn.innerHTML = '<i class="fas fa-times"></i> Failed';
+                    copyBtn.style.background = 'var(--danger)';
+                    
+                    setTimeout(() => {
+                        copyBtn.innerHTML = '<i class="fas fa-copy"></i> Copy';
+                        copyBtn.style.background = 'var(--accent)';
+                    }, 2000);
+                });
+            });
+            
+            pre.style.position = 'relative';
+            pre.appendChild(copyBtn);
+        });
+
+        // ========================================
+        // 初始化导航高亮
+        // ========================================
+        highlightNavigation();
+
+        // ========================================
+        // 添加键盘快捷键支持
+        // ========================================
+        document.addEventListener('keydown', (e) => {
+            // Esc 键返回顶部
+            if (e.key === 'Escape') {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            }
+            
+            // Ctrl/Cmd + K 快速搜索
+            if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+                e.preventDefault();
+                // 这里可以添加搜索功能
+                const searchTerm = prompt('Search for:');
+                if (searchTerm) {
+                    // 简单的页面内搜索
+                    window.find(searchTerm);
+                }
+            }
+        });
+
+        // ========================================
+        // 响应式侧边栏切换（移动端）
+        // ========================================
+        if (window.innerWidth <= 992) {
+            const sidebar = document.querySelector('.sidebar');
+            const toggleBtn = document.createElement('button');
+            
+            toggleBtn.innerHTML = '<i class="fas fa-bars"></i> Menu';
+            toggleBtn.style.cssText = `
+                position: fixed;
+                top: 80px;
+                left: 1rem;
+                z-index: 1001;
+                background: var(--primary);
+                color: white;
+                border: none;
+                padding: 0.7rem 1.2rem;
+                border-radius: 8px;
+                cursor: pointer;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+                font-weight: 600;
+                font-size: 0.95rem;
+                transition: var(--transition);
+            `;
+            
+            document.body.appendChild(toggleBtn);
+            
+            toggleBtn.addEventListener('click', () => {
+                if (sidebar.style.display === 'none' || sidebar.style.display === '') {
+                    sidebar.style.display = 'block';
+                    sidebar.style.position = 'fixed';
+                    sidebar.style.top = '0';
+                    sidebar.style.left = '0';
+                    sidebar.style.height = '100vh';
+                    sidebar.style.width = '280px';
+                    sidebar.style.zIndex = '1000';
+                    sidebar.style.overflowY = 'auto';
+                    sidebar.style.paddingTop = '80px';
+                    toggleBtn.innerHTML = '<i class="fas fa-times"></i> Close';
+                    toggleBtn.style.background = 'var(--danger)';
+                } else {
+                    sidebar.style.display = 'none';
+                    toggleBtn.innerHTML = '<i class="fas fa-bars"></i> Menu';
+                    toggleBtn.style.background = 'var(--primary)';
+                }
+            });
+            
+            // 默认隐藏侧边栏
+            sidebar.style.display = 'none';
+            
+            // 点击侧边栏链接后自动关闭
+            navLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    if (window.innerWidth <= 992) {
+                        sidebar.style.display = 'none';
+                        toggleBtn.innerHTML = '<i class="fas fa-bars"></i> Menu';
+                        toggleBtn.style.background = 'var(--primary)';
+                    }
+                });
+            });
+            
+            // 点击侧边栏外部区域关闭
+            document.addEventListener('click', (e) => {
+                if (window.innerWidth <= 992 && 
+                    sidebar.style.display === 'block' && 
+                    !sidebar.contains(e.target) && 
+                    !toggleBtn.contains(e.target)) {
+                    sidebar.style.display = 'none';
+                    toggleBtn.innerHTML = '<i class="fas fa-bars"></i> Menu';
+                    toggleBtn.style.background = 'var(--primary)';
+                }
+            });
+        }
+
+        // ========================================
+        // 页面加载动画
+        // ========================================
+        window.addEventListener('load', () => {
+            document.body.style.opacity = '0';
+            setTimeout(() => {
+                document.body.style.transition = 'opacity 0.5s ease';
+                document.body.style.opacity = '1';
+            }, 100);
+        });
+
+        // ========================================
+        // 图片懒加载
+        // ========================================
+        if ('IntersectionObserver' in window) {
+            const imageObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const img = entry.target;
+                        if (img.dataset.src) {
+                            img.src = img.dataset.src;
+                            img.removeAttribute('data-src');
+                            observer.unobserve(img);
+                        }
+                    }
+                });
+            });
+
+            document.querySelectorAll('img[data-src]').forEach(img => {
+                imageObserver.observe(img);
+            });
+        }
+
+        // ========================================
+        // 外部链接在新标签打开
+        // ========================================
+        document.querySelectorAll('a[href^="http"]').forEach(link => {
+            if (!link.hasAttribute('target')) {
+                link.setAttribute('target', '_blank');
+                link.setAttribute('rel', 'noopener noreferrer');
+            }
+        });
+
+        // ========================================
+        // 代码高亮增强（可选）
+        // ========================================
+        document.querySelectorAll('pre code').forEach(block => {
+            // 添加行号
+            const lines = block.textContent.split('\n');
+            if (lines.length > 3) {
+                let numberedCode = '';
+                lines.forEach((line, index) => {
+                    if (line.trim()) {
+                        numberedCode += `<span class="line-number">${index + 1}</span>${line}\n`;
+                    }
+                });
+                // 可以根据需要启用此功能
+                // block.innerHTML = numberedCode;
+            }
+        });
+
+        // ========================================
+        // 表格响应式处理
+        // ========================================
+        document.querySelectorAll('table').forEach(table => {
+            const wrapper = document.createElement('div');
+            wrapper.style.overflowX = 'auto';
+            wrapper.style.margin = '20px 0';
+            table.parentNode.insertBefore(wrapper, table);
+            wrapper.appendChild(table);
+        });
+
+        // ========================================
+        // 打印优化
+        // ========================================
+        window.addEventListener('beforeprint', () => {
+            // 展开所有折叠内容
+            document.querySelectorAll('.sidebar').forEach(el => {
+                el.style.display = 'none';
+            });
+        });
+
+        window.addEventListener('afterprint', () => {
+            // 恢复原始状态
+            if (window.innerWidth > 992) {
+                document.querySelectorAll('.sidebar').forEach(el => {
+                    el.style.display = 'block';
+                });
+            }
+        });
+
+        // ========================================
+        // 性能监控（开发环境）
+        // ========================================
+        if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+            window.addEventListener('load', () => {
+                if (window.performance) {
+                    const perfData = window.performance.timing;
+                    const pageLoadTime = perfData.loadEventEnd - perfData.navigationStart;
+                    console.log(`Page load time: ${pageLoadTime}ms`);
+                }
+            });
+        }
+
+        // ========================================
+        // 错误处理
+        // ========================================
+        window.addEventListener('error', (e) => {
+            console.error('Page error:', e.error);
+        });
+
+        // ========================================
+        // 提示信息自动消失
+        // ========================================
+        document.querySelectorAll('.tip').forEach(tip => {
+            tip.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateX(5px)';
+            });
+            
+            tip.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateX(0)';
+            });
+        });
+
+        // ========================================
+        // 动态更新当前年份
+        // ========================================
+        document.querySelectorAll('.copyright').forEach(el => {
+            const currentYear = new Date().getFullYear();
+            el.innerHTML = el.innerHTML.replace('2025', currentYear);
+        });
+
+        // ========================================
+        // 添加阅读进度条
+        // ========================================
+        const progressBar = document.createElement('div');
+        progressBar.style.cssText = `
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            width: 0%;
+            z-index: 9999;
+            transition: width 0.1s ease;
+        `;
+        document.body.appendChild(progressBar);
+
+        window.addEventListener('scroll', () => {
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            progressBar.style.width = scrolled + '%';
+        });
+
+        // ========================================
+        // 控制台彩蛋
+        // ========================================
+        console.log(
+            '%c🤖 Claude Code Setup Assistant',
+            'color: #4361ee; font-size: 24px; font-weight: bold;'
+        );
+        console.log(
+            '%cThanks for using Wukong API!\nIf you need help, visit: https://wukong.support',
+            'color: #4cc9f0; font-size: 14px;'
+        );
+        console.log(
+            '%cTip: press Esc to jump back to the top\nPress Ctrl+K to search within this page',
+            'color: #6c757d; font-size: 12px;'
+        );
+
+        // ========================================
+        // 自动保存滚动位置（刷新页面时恢复）
+        // ========================================
+        window.addEventListener('scroll', () => {
+            sessionStorage.setItem('scrollPosition', window.pageYOffset);
+        });
+
+        window.addEventListener('load', () => {
+            const scrollPosition = sessionStorage.getItem('scrollPosition');
+            if (scrollPosition) {
+                window.scrollTo(0, parseInt(scrollPosition));
+            }
+        });
+
+        // ========================================
+        // 链接点击统计
+        // ========================================
+        document.querySelectorAll('a[href^="http"]').forEach(link => {
+            link.addEventListener('click', function(e) {
+                const url = this.getAttribute('href');
+                // 这里可以发送统计数据到后端
+                
+            });
+        });
+
+        // ========================================
+        // 主题切换功能
+        // ========================================
+        function toggleTheme() {
+            const currentTheme = document.body.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            document.body.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+        }
+
+        // 加载保存的主题
+        window.addEventListener('load', () => {
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme) {
+                document.body.setAttribute('data-theme', savedTheme);
+            }
+        });
+    </script>
+
+
+</body></html>

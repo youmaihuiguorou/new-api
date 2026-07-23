@@ -24,11 +24,35 @@ type ThemeAssets struct {
 func SetWebRouter(router *gin.Engine, assets ThemeAssets) {
 	defaultFS := common.EmbedFolder(assets.DefaultBuildFS, "web/default/dist")
 	classicFS := common.EmbedFolder(assets.ClassicBuildFS, "web/classic/dist")
+	docsFS := common.EmbedFolder(assets.ClassicBuildFS, "web/classic/dist/docs")
 	themeFS := common.NewThemeAwareFS(defaultFS, classicFS)
 
 	router.Use(gzip.Gzip(gzip.DefaultCompression))
 	router.Use(middleware.GlobalWebRateLimit())
 	router.Use(middleware.Cache())
+	// Documentation is shared by both themes. Register explicit routes instead
+	// of static middleware so every Docsify resource is served from docsFS.
+	serveDocsIndex := func(c *gin.Context) {
+		indexPage, err := assets.ClassicBuildFS.ReadFile("web/classic/dist/docs/index.html")
+		if err != nil {
+			c.Status(http.StatusNotFound)
+			return
+		}
+		c.Data(http.StatusOK, "text/html; charset=utf-8", indexPage)
+	}
+	docsHandler := http.StripPrefix("/docs", http.FileServer(docsFS))
+	router.GET("/docs", serveDocsIndex)
+	router.GET("/docs/*filepath", func(c *gin.Context) {
+		if c.Param("filepath") == "/" {
+			serveDocsIndex(c)
+			return
+		}
+		docsHandler.ServeHTTP(c.Writer, c.Request)
+		c.Abort()
+	})
+	// Register theme assets after the documentation routes. Its catch-all static
+	// middleware otherwise aborts Docsify resource requests before they reach
+	// the handlers above.
 	router.Use(static.Serve("/", themeFS))
 	router.NoRoute(func(c *gin.Context) {
 		c.Set(middleware.RouteTagKey, "web")
