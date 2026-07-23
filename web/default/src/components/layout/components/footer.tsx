@@ -157,7 +157,7 @@ export function Footer(props: FooterProps) {
     demoSiteEnabled,
   } = useSystemConfig()
 
-  const displayLogo = systemLogo || props.logo || '/images.jpeg'
+  const displayLogo = systemLogo || props.logo || '/logo-panda.png?v=7e923c9b'
   const displayName = systemName || props.name || 'New API'
   const isDemoSiteMode = Boolean(demoSiteEnabled)
   const currentYear = new Date().getFullYear()

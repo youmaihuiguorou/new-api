@@ -1,4 +1,4 @@
-# 在Cherry Studio中使用 悟空 API
+# 在Cherry Studio中使用 熊猫 API
 
 > Cherry Studio AI 是一款强大的多模型 AI 助手，支持 iOS、macOS 和 Windows 平台。快速切换多个先进的 LLM 模型，提升工作学习效率。
 

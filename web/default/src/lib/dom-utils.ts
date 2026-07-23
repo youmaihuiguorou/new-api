@@ -19,13 +19,22 @@ For commercial licensing, please contact support@quantumnous.com
 export function applyFaviconToDom(url: string) {
   if (typeof document === 'undefined' || !url) return
   try {
-    const next = new URL(url, window.location.href).href
+    const faviconUrl = new URL(url, window.location.href)
+    // Use the dedicated square favicon when the bundled fallback logo is set.
+    if (
+      faviconUrl.origin === window.location.origin &&
+      faviconUrl.pathname === '/images.jpeg'
+    ) {
+      faviconUrl.pathname = '/favicon-panda.ico'
+      faviconUrl.search = ''
+    }
+    const next = faviconUrl.href
     const existing =
       document.querySelectorAll<HTMLLinkElement>('link[rel~="icon"]')
     if (existing.length === 1 && existing[0].href === next) return
     const link = document.createElement('link')
     link.rel = 'icon'
-    link.href = url
+    link.href = next
     existing.forEach((l) => l.remove())
     document.head.appendChild(link)
   } catch {

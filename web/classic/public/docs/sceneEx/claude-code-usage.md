@@ -156,7 +156,7 @@ claude
 
 ## 📌 注意事项
 
-- 悟空当前直接接入官方 Claude Code 转发服务
+- 熊猫当前直接接入官方 Claude Code 转发服务
 - 仅支持 Claude Code 的 API 流量，不支持其他 API 调用
 - 请妥善保管您的 API 令牌，避免泄露
 

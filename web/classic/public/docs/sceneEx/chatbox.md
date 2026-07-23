@@ -1,4 +1,4 @@
-# 在Chatbox中使用 悟空 API
+# 在Chatbox中使用 熊猫 API
 
 > Chatbox AI 是一款 AI 客户端应用和智能助手，支持众多先进的 AI 模型和 API，可在 Windows、MacOS、Android、iOS、Linux 和网页版上使用。
 

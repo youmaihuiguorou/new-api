@@ -22,7 +22,9 @@ For commercial licensing, please contact support@quantumnous.com
 
 // System Configuration Defaults
 export const DEFAULT_SYSTEM_NAME = 'New API'
-export const DEFAULT_LOGO = '/images.jpeg'
+// Keep the bundled logo URL versioned so replacing the file is visible without
+// waiting for the browser's static-asset cache to expire.
+export const DEFAULT_LOGO = '/logo-panda.png?v=7e923c9b'
 
 // LocalStorage Keys
 export const STORAGE_KEYS = {

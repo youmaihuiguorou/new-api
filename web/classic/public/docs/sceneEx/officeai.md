@@ -1,4 +1,4 @@
-# 在OfficeAI助手中使用 悟空 API
+# 在OfficeAI助手中使用 熊猫 API
 
 > OfficeAI 助手 是一款免费的智能AI办公工具软件，专为 Microsoft Office 和 WPS 用户打造。
 无论你是在寻找如何输入“打勾（√）符号”的方法，还是想知道“怎么在插入表格前添加文字”，或者“该用哪个公式”，

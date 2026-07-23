@@ -22,11 +22,11 @@ export default defineConfig(({ envMode }) => {
     'http://localhost:3000'
   const isProd = envMode === 'production'
   const devProxy = Object.fromEntries(
-    (['/api', '/mj', '/pg', '/docs'] as const).map((key) => [
+    ['/api', '/mj', '/pg', '/docs'].map((key) => [
       key,
       { target: proxyServerUrl, changeOrigin: true },
     ]),
-  ) as Record<string, { target: string; changeOrigin: boolean }>
+  )
 
   return {
     plugins: [pluginReact()],
@@ -51,6 +51,7 @@ export default defineConfig(({ envMode }) => {
     },
     html: {
       template: './index.html',
+      favicon: './public/favicon-panda.ico',
     },
     server: {
       host: '0.0.0.0',

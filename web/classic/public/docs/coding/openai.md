@@ -6,9 +6,9 @@
 from openai import OpenAI
 
 client = OpenAI(
-    # #将这里换成你在 悟空 令牌处拿到的密钥
+    # #将这里换成你在 熊猫 令牌处拿到的密钥
     api_key="sk-xxx",
-    # 这里将官方的接口访问地址，替换成悟空的入口地址
+    # 这里将官方的接口访问地址，替换成熊猫的入口地址
     base_url="https://api.wukong.support/v1"
 )
 

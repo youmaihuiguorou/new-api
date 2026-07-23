@@ -1,4 +1,4 @@
-# Claude Code 接入悟空API教程
+# Claude Code 接入熊猫API教程
 
 
 点击链接查看接入教程

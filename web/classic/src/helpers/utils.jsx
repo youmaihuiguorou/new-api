@@ -54,7 +54,8 @@ export function getSystemName() {
 
 export function getLogo() {
   let logo = localStorage.getItem('logo');
-  if (!logo) return '/images.jpeg';
+  if (!logo) return '/logo-panda.png?v=7e923c9b';
+  if (logo === '/images.jpeg') return '/logo-panda.png?v=7e923c9b';
   return logo;
 }
 

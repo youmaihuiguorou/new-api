@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>悟空 API文档</title>
+  <title>熊猫 API文档</title>
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
   <meta name="description" content="Description">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
@@ -86,7 +86,7 @@
   </style>
 </head>
 <body>
-  <div id="app">悟空 API文档正在加载中，请耐心等待...</div>
+  <div id="app">熊猫 API文档正在加载中，请耐心等待...</div>
   <div class="wk-doc-toolbar" aria-label="Language switcher">
     <button type="button" class="wk-doc-lang-btn" data-lang="zh">中文</button>
     <button type="button" class="wk-doc-lang-btn" data-lang="en">EN</button>
@@ -189,9 +189,9 @@
 
       var loadingText = currentDocLanguage === 'en'
         ? 'Wukong API docs are loading, please wait...'
-        : '悟空 API文档正在加载中，请耐心等待...';
+        : '熊猫 API文档正在加载中，请耐心等待...';
       var homeText = currentDocLanguage === 'en' ? 'Back Home' : '返回首页';
-      var docTitle = currentDocLanguage === 'en' ? 'Wukong API Docs' : '悟空 API文档';
+      var docTitle = currentDocLanguage === 'en' ? 'Wukong API Docs' : '熊猫 API文档';
 
       document.documentElement.lang = currentDocLanguage === 'en' ? 'en' : 'zh-CN';
       document.title = docTitle;

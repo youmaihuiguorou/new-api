@@ -1,7 +1,7 @@
 
-# OpenCode 配置 悟空API 教程
+# OpenCode 配置 熊猫API 教程
 
-本文档旨在说明如何将符合 OpenAI 接口规范的 API 服务（以悟空API为例）集成到 OpenCode 环境中。
+本文档旨在说明如何将符合 OpenAI 接口规范的 API 服务（以熊猫API为例）集成到 OpenCode 环境中。
 
 > **⚠️ 关于 Gemini 模型的特别提示**
 >
@@ -26,7 +26,7 @@ pnpm install -g @opencode/cli
 2.  **选择类型：** 在列表中向下滚动，选中底部的 **`other`** (或直接键入 `other` 搜索)。
 3.  **定义 ID：** 输入一个自定义标识符，建议输入 **`wukongApi`**。
     *   *注意：此 ID 将用于后续配置文件的关联，请务必记住。*
-4.  **录入密钥：** 输入您在 悟空API 平台获取的 `sk-xxxx` 开头的 API Key。
+4.  **录入密钥：** 输入您在 熊猫API 平台获取的 `sk-xxxx` 开头的 API Key。
 
 ## 3. 配置 OpenCode 参数
 
@@ -78,7 +78,7 @@ OpenCode 通过 `opencode.json` 文件来解析服务商参数。请根据您的
 | **npm** | 固定使用 `@ai-sdk/openai-compatible` 以适配通用 OpenAI 协议。 |
 | **baseURL** | 填写接口地址：`https://api.wukong.support/v1` (通常需包含 `/v1` 后缀)。 |
 | **apiKey** | 使用 `"{cred:ID}"` 语法（例如 `"{cred:wukongApi}"`）。系统会自动从本地凭证库提取对应 ID 的密钥，实现无明文配置。 |
-| **models** | 需手动声明您想使用的模型列表。键名（Key）必须对应悟空API平台支持的真实 Model ID。 |
+| **models** | 需手动声明您想使用的模型列表。键名（Key）必须对应熊猫API平台支持的真实 Model ID。 |
 
 ## 4. 加载与验证
 
